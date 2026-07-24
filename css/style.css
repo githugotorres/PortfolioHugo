@@ -1,0 +1,1322 @@
+/* ---------- Base & tokens ---------- */
+:root {
+  --bg: #0e0b16;
+  --ink: #f4f1fa;
+  --ink-dim: rgba(244, 241, 250, 0.65);
+  --accent-1: #ff5f6d;
+  --accent-2: #845ec2;
+  --accent-3: #00c9a7;
+  --accent-4: #ffc75f;
+  --glass-bg: rgba(255, 255, 255, 0.1);
+  --glass-border: rgba(255, 255, 255, 0.2);
+  --glass-highlight: rgba(255, 255, 255, 0.35);
+  --radius: 24px;
+  --ease: cubic-bezier(0.22, 1, 0.36, 1);
+  --active-accent: var(--accent-3);
+  --mono: "SF Mono", "JetBrains Mono", ui-monospace, "Menlo", monospace;
+  --font-display: "Bebas Neue", "Arial Narrow", sans-serif;
+}
+
+/* ---------- Transição animada entre páginas (index <-> project) ---------- */
+@view-transition {
+  navigation: auto;
+}
+
+::view-transition-old(root),
+::view-transition-new(root) {
+  animation-duration: 0.5s;
+  animation-timing-function: cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+* { box-sizing: border-box; }
+
+html { scroll-behavior: smooth; overflow-x: clip; }
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  background: var(--bg);
+  color: var(--ink);
+  font-family: "SF Pro Display", -apple-system, BlinkMacSystemFont, "Segoe UI", Inter, sans-serif;
+  overflow-x: hidden;
+}
+
+/* Foco visível genérico: todos os links/botões, não só os que já tinham um tratamento dedicado */
+a:focus-visible,
+button:focus-visible {
+  outline: 2px dashed var(--active-accent, var(--accent-3));
+  outline-offset: 3px;
+}
+
+.skip-link {
+  position: absolute;
+  top: -100px;
+  left: 1rem;
+  z-index: 999;
+  padding: 0.75rem 1.25rem;
+  background: var(--ink);
+  color: #0a0812;
+  font-weight: 700;
+  text-decoration: none;
+  border-radius: 8px;
+  transition: top 0.3s var(--ease);
+}
+
+.skip-link:focus {
+  top: 1rem;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  * { animation-duration: 0.01ms !important; animation-iteration-count: 1 !important; transition-duration: 0.01ms !important; }
+  ::view-transition-group(*),
+  ::view-transition-old(*),
+  ::view-transition-new(*) {
+    animation: none !important;
+  }
+  .hg-letter { transform: none !important; }
+}
+
+/* ---------- Surreal animated background ---------- */
+.bg-blobs {
+  position: fixed;
+  inset: 0;
+  z-index: -2;
+  overflow: hidden;
+}
+
+.blob-layer {
+  position: absolute;
+  inset: 0;
+  will-change: transform;
+  transition: transform 0.6s var(--ease);
+}
+
+/* Uma vez que o parallax está ativo (rato fino), o transform é escrito a cada frame —
+   a transição só o faria ficar sempre "atrás" do rato, como já corrigimos nos botões. */
+.blob-layer.is-tracking {
+  transition-property: none;
+}
+
+.blob {
+  position: absolute;
+  width: 42vmax;
+  height: 42vmax;
+  border-radius: 50%;
+  filter: blur(56px);
+  opacity: 0.5;
+  will-change: transform;
+  transform: translateZ(0);
+}
+
+.blob-1 {
+  top: -15%;
+  left: -10%;
+  background: var(--accent-1);
+  animation: drift1 26s ease-in-out infinite;
+}
+
+.blob-2 {
+  top: 20%;
+  right: -15%;
+  background: var(--accent-2);
+  animation: drift2 32s ease-in-out infinite;
+}
+
+.blob-3 {
+  bottom: -20%;
+  left: 15%;
+  background: var(--accent-3);
+  animation: drift3 30s ease-in-out infinite;
+}
+
+.blob-4 {
+  bottom: -10%;
+  right: 5%;
+  width: 30vmax;
+  height: 30vmax;
+  background: var(--accent-4);
+  animation: drift1 24s ease-in-out infinite reverse;
+}
+
+@keyframes drift1 {
+  0%, 100% { transform: translate(0, 0) scale(1); }
+  50% { transform: translate(6vw, 8vh) scale(1.12); }
+}
+
+@keyframes drift2 {
+  0%, 100% { transform: translate(0, 0) scale(1); }
+  50% { transform: translate(-8vw, 6vh) scale(0.92); }
+}
+
+@keyframes drift3 {
+  0%, 100% { transform: translate(0, 0) scale(1); }
+  50% { transform: translate(5vw, -7vh) scale(1.08); }
+}
+
+.noise-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+  opacity: 0.035;
+  mix-blend-mode: overlay;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+}
+
+.cursor-glow {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 220px;
+  height: 220px;
+  border-radius: 50%;
+  pointer-events: none;
+  z-index: 0;
+  mix-blend-mode: screen;
+  background: radial-gradient(circle, rgba(255, 95, 109, 0.38), rgba(132, 94, 194, 0.22) 45%, transparent 72%);
+  transform: translate(-50%, -50%);
+  will-change: transform, filter;
+  animation: glow-hue 14s linear infinite;
+}
+
+@keyframes glow-hue {
+  0% { filter: hue-rotate(0deg) saturate(160%); }
+  100% { filter: hue-rotate(360deg) saturate(160%); }
+}
+
+/* Separador em segundo plano: pausa as animações mais caras (blur grande + filter contínuo).
+   Ninguém as vê nesse estado, por isso é ganho puro — zero custo visual. */
+body.tab-hidden .blob,
+body.tab-hidden .cursor-glow {
+  animation-play-state: paused;
+}
+
+#page-content {
+  position: relative;
+  z-index: 1;
+  transition: filter 0.4s var(--ease);
+}
+
+/* ---------- Liquid glass ---------- */
+.glass {
+  position: relative;
+  background: var(--glass-bg);
+  border: 1px solid var(--glass-border);
+  border-radius: var(--radius);
+  backdrop-filter: blur(14px) saturate(140%);
+  -webkit-backdrop-filter: blur(14px) saturate(140%);
+  box-shadow:
+    0 8px 32px rgba(0, 0, 0, 0.35),
+    inset 0 1px 0 var(--glass-highlight),
+    inset 0 0 60px rgba(255, 255, 255, 0.02);
+}
+
+.glass::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  padding: 1px;
+  background: linear-gradient(135deg, rgba(255,255,255,0.5), transparent 40%, transparent 60%, rgba(255,255,255,0.15));
+  -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+  pointer-events: none;
+  opacity: 0.6;
+}
+
+/* ---------- Nav ---------- */
+.nav {
+  position: fixed;
+  top: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 100;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 2.5rem;
+  padding: 0.75rem 1.75rem;
+  width: min(680px, calc(100% - 2.5rem));
+  border-radius: 999px;
+  opacity: 0;
+  animation: nav-reveal 0.8s var(--ease) 0.1s forwards;
+  transition: background 0.4s var(--ease), border-color 0.4s var(--ease), box-shadow 0.4s var(--ease), padding 0.4s var(--ease), backdrop-filter 0.4s var(--ease);
+}
+
+@keyframes nav-reveal {
+  from { opacity: 0; transform: translateX(-50%) translateY(-12px); }
+  to { opacity: 1; transform: translateX(-50%) translateY(0); }
+}
+
+.nav.is-scrolled {
+  padding: 0.6rem 1.75rem;
+  background: rgba(14, 11, 22, 0.6);
+  border-color: rgba(255, 255, 255, 0.22);
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.45);
+  backdrop-filter: blur(20px) saturate(160%);
+  -webkit-backdrop-filter: blur(20px) saturate(160%);
+}
+
+.nav-logo {
+  font-family: var(--font-display);
+  font-weight: 400;
+  text-transform: uppercase;
+  letter-spacing: 0.03em;
+  color: var(--ink);
+  text-decoration: none;
+  font-size: 1.15rem;
+}
+
+.nav-links {
+  display: flex;
+  gap: 1.75rem;
+}
+
+.nav-links a {
+  color: var(--ink-dim);
+  text-decoration: none;
+  font-size: 0.92rem;
+  transition: color 0.3s var(--ease);
+}
+
+.nav-links a:hover { color: var(--ink); }
+
+.nav-links a,
+.nav-logo {
+  position: relative;
+}
+
+.nav-links a.is-active,
+.nav-logo.is-active {
+  color: var(--ink);
+}
+
+.nav-links a.is-active::after {
+  content: "";
+  position: absolute;
+  left: 50%;
+  bottom: -7px;
+  width: 4px;
+  height: 4px;
+  border-radius: 50%;
+  background: var(--active-accent, var(--accent-3));
+  transform: translateX(-50%);
+}
+
+/* ---------- Layout sections ---------- */
+section {
+  position: relative;
+  z-index: 1;
+  padding: 8rem 1.5rem;
+  max-width: 1100px;
+  margin: 0 auto;
+}
+
+.hero {
+  position: relative;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: flex-start;
+  text-align: left;
+  padding: 7rem clamp(1.5rem, 6vw, 4.5rem) 4rem;
+  overflow: hidden;
+}
+
+.hero-kicker {
+  position: absolute;
+  left: clamp(0.5rem, 2vw, 1.5rem);
+  top: 50%;
+  transform: translateY(-50%) rotate(180deg);
+  writing-mode: vertical-rl;
+  font-family: var(--mono);
+  font-size: 0.7rem;
+  letter-spacing: 0.3em;
+  text-transform: uppercase;
+  color: var(--ink-dim);
+}
+
+.hero-note {
+  font-family: var(--mono);
+  font-size: 0.8rem;
+  color: var(--ink-dim);
+  margin: 0 0 0.5rem 0.2em;
+}
+
+.hero-name {
+  margin: 0;
+  font-family: var(--font-display);
+  font-weight: 400;
+  font-synthesis: none;
+  line-height: 0.85;
+  letter-spacing: 0.01em;
+  cursor: default;
+  outline: none;
+}
+
+.hero-name:focus-visible {
+  outline: 2px dashed var(--accent-3);
+  outline-offset: 10px;
+}
+
+.hero-name-row {
+  display: block;
+  text-transform: uppercase;
+  font-size: clamp(3.6rem, 17vw, 12.5rem);
+}
+
+.hero-name-row--offset {
+  margin-left: clamp(1rem, 9vw, 6rem);
+  margin-top: -0.06em;
+}
+
+.hg-letter {
+  display: inline-block;
+  white-space: pre;
+  --d: 1;
+  --i: 0;
+  color: var(--ink);
+  font-weight: inherit;
+  /* Entrada (clip-path/opacity, atrasada por --i) e hover (transform/cor, atrasado por --d) não partilham propriedade: sem conflito */
+  clip-path: inset(0 0 100% 0);
+  opacity: 0;
+  transition:
+    clip-path 0.7s var(--ease),
+    opacity 0.5s var(--ease),
+    color 0.35s var(--ease),
+    text-shadow 0.35s var(--ease),
+    font-weight 0.35s var(--ease),
+    transform 0.35s var(--ease);
+  transition-delay:
+    calc(var(--i, 0) * 28ms),
+    calc(var(--i, 0) * 28ms),
+    calc(var(--d, 1) * 30ms),
+    calc(var(--d, 1) * 30ms),
+    calc(var(--d, 1) * 30ms),
+    calc(var(--d, 1) * 30ms);
+}
+
+.hero-name.is-in .hg-letter {
+  clip-path: inset(0 0 0% 0);
+  opacity: 1;
+}
+
+/* Hover real (rato): a cor é a própria distância ao cursor, não um interruptor — só as letras
+   perto ganham teal, o resto esbate-se de volta a --ink num gradiente contínuo.
+   Transição curta e sem delay aqui: o --d já muda a cada frame do rato, uma transição longa
+   fica sempre "a perseguir" um alvo que já mudou outra vez — mais leve e fiel sem ela. */
+.hero-name:hover .hg-letter {
+  color: color-mix(in oklab, var(--ink), var(--accent-3) calc((1 - var(--d, 1)) * 100%));
+  font-weight: calc(900 - var(--d, 1) * 150);
+  text-shadow: 0 0 calc(14px * (1 - var(--d, 1))) rgba(0, 201, 167, calc((1 - var(--d, 1)) * 0.5));
+  transform: translateY(calc((1 - var(--d, 1)) * -0.03em));
+  transition: color 0.12s linear, text-shadow 0.12s linear, font-weight 0.12s linear, transform 0.12s linear;
+}
+
+/* Toque/teclado: sem posição de cursor real, mantém o sweep uniforme como sempre teve */
+.hero-name.is-active .hg-letter,
+.hero-name:focus-visible .hg-letter {
+  color: var(--accent-3);
+  font-weight: 850;
+  text-shadow: 0 0 16px rgba(0, 201, 167, 0.5);
+  transform: translateY(-0.03em);
+}
+
+/* Sem caixa: só texto corrido, a fazer de subtítulo por baixo do nome */
+.hero-sticker {
+  display: inline-block;
+  align-self: flex-start;
+  max-width: 44ch;
+  margin: 1.5rem 0 1.75rem 0.2em;
+  color: var(--ink-dim);
+  font-size: 0.98rem;
+  font-weight: 500;
+  line-height: 1.55;
+}
+
+.hero-actions {
+  display: flex;
+  gap: 1rem;
+  flex-wrap: wrap;
+  margin-top: 0.25rem;
+}
+
+/* .btn-block é .glass por baixo (mesmo vidro líquido da navbar) — só ajusta layout/tipografia
+   e o grau de opacidade que distingue a variante sólida da variante contorno. */
+.btn-block {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  padding: 0.85rem 1.75rem;
+  font-size: 0.95rem;
+  font-weight: 700;
+  text-decoration: none;
+  color: var(--ink);
+  transition:
+    transform 0.8s var(--ease),
+    box-shadow 0.8s var(--ease),
+    background 0.8s var(--ease),
+    border-color 0.8s var(--ease),
+    backdrop-filter 0.8s var(--ease);
+}
+
+/* Um só movimento — sobe, o vidro clareia. Sem seguir o rato, só CSS. */
+.btn-block:hover,
+.btn-block:active {
+  transform: translateY(-3px);
+}
+
+.btn-block--solid {
+  background: rgba(255, 255, 255, 0.14);
+}
+
+.btn-block--solid:hover,
+.btn-block--solid:active {
+  background: rgba(255, 255, 255, 0.26);
+  border-color: rgba(255, 255, 255, 0.45);
+  backdrop-filter: blur(18px) saturate(170%);
+  -webkit-backdrop-filter: blur(18px) saturate(170%);
+  box-shadow: 0 10px 32px rgba(0, 0, 0, 0.35), inset 0 1px 0 rgba(255, 255, 255, 0.45);
+}
+
+.btn-block--outline {
+  background: transparent;
+}
+
+.btn-block--outline:hover,
+.btn-block--outline:active {
+  background: rgba(255, 255, 255, 0.12);
+  border-color: rgba(255, 255, 255, 0.35);
+  backdrop-filter: blur(18px) saturate(170%);
+  -webkit-backdrop-filter: blur(18px) saturate(170%);
+  box-shadow: 0 8px 28px rgba(0, 0, 0, 0.3), inset 0 1px 0 rgba(255, 255, 255, 0.3);
+}
+
+.scroll-status {
+  position: absolute;
+  right: clamp(0.75rem, 3vw, 2rem);
+  bottom: 2rem;
+  margin: 0;
+  font-family: var(--mono);
+  font-size: 0.72rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--ink-dim);
+}
+
+/* ---------- Linhas de labirinto (scroll-linked) ---------- */
+.maze {
+  position: fixed;
+  top: 0;
+  height: 100vh;
+  width: clamp(24px, 4vw, 56px);
+  z-index: 1;
+  pointer-events: none;
+  opacity: 0.55;
+}
+
+.maze--left { left: 0; }
+.maze--right { right: 0; }
+
+.maze-path {
+  fill: none;
+  stroke: var(--active-accent, var(--accent-3));
+  stroke-width: 1.5;
+  stroke-linejoin: round;
+  vector-effect: non-scaling-stroke;
+  transition: stroke 0.4s var(--ease);
+}
+
+.maze-cursor {
+  fill: var(--active-accent, var(--accent-3));
+  transition: fill 0.4s var(--ease);
+}
+
+/* ---------- Buttons ---------- */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.85rem 1.75rem;
+  border-radius: 999px;
+  text-decoration: none;
+  font-size: 0.95rem;
+  font-weight: 500;
+  transition: transform 0.35s var(--ease), box-shadow 0.35s var(--ease), background 0.35s var(--ease), background-position 0.5s var(--ease);
+}
+
+.btn-primary {
+  background: linear-gradient(135deg, var(--accent-1), var(--accent-2));
+  background-size: 160% 160%;
+  background-position: 0% 0%;
+  color: #0a0812;
+  font-weight: 700;
+  box-shadow: 0 8px 24px rgba(255, 95, 109, 0.28);
+}
+
+.btn-primary:hover {
+  transform: translateY(-2px) scale(1.03);
+  background-position: 100% 100%;
+  box-shadow: 0 14px 40px rgba(255, 95, 109, 0.5), 0 0 26px rgba(132, 94, 194, 0.35);
+}
+
+.btn-glass {
+  background: var(--glass-bg);
+  border: 1px solid var(--glass-border);
+  color: var(--ink);
+  backdrop-filter: blur(12px);
+}
+
+.btn-glass:hover {
+  transform: translateY(-2px) scale(1.03);
+  background: rgba(255, 255, 255, 0.14);
+  box-shadow: 0 8px 28px rgba(132, 94, 194, 0.3);
+}
+
+/* ---------- Panels ---------- */
+.panel {
+  padding: clamp(2rem, 5vw, 3.5rem);
+}
+
+.section-title {
+  font-size: clamp(1.8rem, 4vw, 2.6rem);
+  letter-spacing: -0.02em;
+  margin: 0 0 1.25rem;
+}
+
+.projects > .section-title {
+  text-align: center;
+  margin-bottom: 3rem;
+}
+
+.section-kicker {
+  display: block;
+  font-family: var(--mono);
+  font-size: 0.72rem;
+  letter-spacing: 0.25em;
+  text-transform: uppercase;
+  color: var(--active-accent, var(--accent-3));
+  margin: 0 0 1rem;
+  transition: color 0.4s var(--ease);
+}
+
+.section-kicker--center {
+  text-align: center;
+  margin-bottom: 0.75rem;
+}
+
+.about-text {
+  color: var(--ink-dim);
+  font-size: 1.05rem;
+  line-height: 1.7;
+  max-width: 65ch;
+}
+
+.about-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 2.5rem;
+}
+
+@media (min-width: 800px) {
+  .about-grid {
+    grid-template-columns: 1.4fr 1fr;
+    align-items: start;
+  }
+}
+
+.skills-categories {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.skills-category {
+  padding-top: 1rem;
+  border-top: 1px solid var(--glass-border);
+}
+
+.skills-category-label {
+  display: flex;
+  align-items: baseline;
+  gap: 0.85rem;
+  margin: 0 0 0.85rem;
+  font-size: 0.85rem;
+  letter-spacing: 0.02em;
+  color: var(--ink-dim);
+}
+
+.skills-index {
+  font-family: var(--mono);
+  font-size: 0.78rem;
+  color: var(--active-accent, var(--accent-3));
+  transition: color 0.4s var(--ease);
+}
+
+.skills-badges {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.6rem;
+}
+
+.skill-badge {
+  font-family: var(--mono);
+  font-size: 0.8rem;
+  padding: 0.4rem 0.85rem;
+  border: 1px solid var(--glass-border);
+  border-radius: 999px;
+  color: var(--ink-dim);
+  transition: color 0.3s var(--ease), border-color 0.3s var(--ease), background 0.3s var(--ease);
+}
+
+.skill-badge:hover {
+  color: var(--ink);
+  border-color: var(--active-accent, var(--accent-3));
+  background: rgba(0, 201, 167, 0.1);
+}
+
+.about-photo {
+  width: min(200px, 100%);
+  aspect-ratio: 1 / 1;
+  margin: 0 auto;
+  border-radius: 50%;
+  overflow: hidden;
+  border: 1px solid var(--glass-border);
+}
+
+.about-photo img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* ---------- Projects grid ---------- */
+.projects-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 1.5rem;
+}
+
+.project-card {
+  position: relative;
+  padding: 1.75rem;
+  border-radius: var(--radius);
+  overflow: hidden;
+  text-decoration: none;
+  color: var(--ink);
+  display: flex;
+  flex-direction: column;
+  min-height: 240px;
+  /* Sem backdrop-filter em repouso: com vários cards na grelha ao mesmo tempo, ter os 4
+     sempre a desfocar o fundo é caro para nada (o fundo já está desfocado pelos blobs).
+     Só entra no hover, onde custa uma vez em vez de sempre. */
+  backdrop-filter: none;
+  -webkit-backdrop-filter: none;
+  transition: transform 0.9s var(--ease), box-shadow 0.9s var(--ease), background 0.9s var(--ease), border-color 0.9s var(--ease), backdrop-filter 0.9s var(--ease);
+}
+
+/* Um só movimento — sobe, o vidro clareia ligeiramente, a sombra aprofunda-se.
+   Sem tilt 3D, sem scale: o cursor só acende o spotlight (--mx/--my), o resto é CSS puro.
+   Especificidade ".glass:hover" (não só ":hover") de propósito: precisa de ganhar a
+   ".reveal.is-visible" (mesma especificidade, mas vem depois no ficheiro). */
+.project-card.glass:hover {
+  transform: translateY(-8px);
+  background: rgba(255, 255, 255, 0.13);
+  border-color: rgba(255, 255, 255, 0.28);
+  backdrop-filter: blur(14px) saturate(140%);
+  -webkit-backdrop-filter: blur(14px) saturate(140%);
+  box-shadow: 0 24px 56px rgba(0, 0, 0, 0.38), inset 0 1px 0 rgba(255, 255, 255, 0.3);
+}
+
+.project-glow {
+  position: absolute;
+  inset: -20%;
+  opacity: 0.3;
+  z-index: -1;
+  transition: opacity 0.8s var(--ease);
+}
+
+.project-card:hover .project-glow { opacity: 0.5; }
+
+/* Spotlight suave que segue o cursor dentro do card (--mx/--my escritos por rAF em main.js) */
+.project-spotlight {
+  position: absolute;
+  inset: 0;
+  opacity: 0;
+  background: radial-gradient(280px circle at var(--mx, 50%) var(--my, 50%), rgba(255, 255, 255, 0.1), transparent 70%);
+  transition: opacity 0.7s var(--ease);
+  pointer-events: none;
+}
+
+.project-card:hover .project-spotlight {
+  opacity: 1;
+}
+
+.project-index {
+  position: absolute;
+  top: 1.25rem;
+  right: 1.5rem;
+  font-family: var(--mono);
+  font-size: 0.75rem;
+  letter-spacing: 0.05em;
+  color: var(--ink-dim);
+}
+
+.project-tags {
+  display: flex;
+  gap: 0.4rem;
+  flex-wrap: wrap;
+}
+
+.project-tags span {
+  font-size: 0.72rem;
+  padding: 0.25rem 0.65rem;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.1);
+  color: var(--ink-dim);
+  transition: color 0.3s var(--ease), background 0.3s var(--ease);
+}
+
+.project-card:hover .project-tags span,
+.project-page-panel .project-tags span:hover {
+  color: var(--ink);
+  background: rgba(0, 201, 167, 0.14);
+}
+
+.project-title {
+  font-size: 1.3rem;
+  font-weight: 600;
+  margin: 1.25rem 0 0.85rem;
+  letter-spacing: -0.01em;
+}
+
+.project-desc {
+  color: var(--ink-dim);
+  font-size: 0.92rem;
+  line-height: 1.55;
+  margin: 0;
+  padding-top: 0.85rem;
+  border-top: 1px solid rgba(255, 255, 255, 0.14);
+}
+
+.project-arrow {
+  align-self: flex-end;
+  margin-top: auto;
+  padding-top: 1.25rem;
+  font-size: 1.1rem;
+  transition: transform 0.35s var(--ease);
+}
+
+.project-card:hover .project-arrow {
+  transform: translate(4px, -4px);
+}
+
+/* ---------- Página individual do projeto ---------- */
+.project-page {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: flex-start;
+  gap: 2rem;
+}
+
+.project-page-back {
+  align-self: flex-start;
+}
+
+.project-page-panel {
+  width: 100%;
+}
+
+.project-page-title {
+  font-size: clamp(1.8rem, 4vw, 2.6rem);
+  letter-spacing: -0.02em;
+  margin: 0 0 1.25rem;
+}
+
+.project-page-desc {
+  color: var(--ink-dim);
+  font-size: 1.05rem;
+  line-height: 1.7;
+  max-width: 65ch;
+}
+
+.project-page-panel .project-tags {
+  margin-top: 1.5rem;
+  margin-bottom: 0;
+}
+
+/* Projetos com media rica (galeria/vídeo) fluem normalmente em vez de centrar verticalmente —
+   os outros 3 projetos (sem media) mantêm o comportamento centrado de sempre. */
+.project-page.has-media {
+  min-height: 0;
+  justify-content: flex-start;
+  align-items: stretch;
+}
+
+/* ---------- Media hero do projeto (marca + vídeo + paleta) ---------- */
+.project-media-hero:empty { display: none; }
+
+.project-media-hero {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2.5rem;
+  width: 100%;
+  padding: 1rem 0 2rem;
+}
+
+.media-mark {
+  max-width: min(420px, 80%);
+}
+
+.media-mark img {
+  display: block;
+  width: 100%;
+  height: auto;
+  opacity: 0.92;
+}
+
+.project-video {
+  position: relative;
+  width: 100%;
+  max-width: 720px;
+  border-radius: var(--radius);
+  overflow: hidden;
+}
+
+.project-video video {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
+.video-play-btn {
+  position: absolute;
+  inset: 0;
+  display: none;
+  align-items: center;
+  justify-content: center;
+  background: rgba(10, 8, 18, 0.4);
+  border: none;
+  color: var(--ink);
+  font-size: 2.2rem;
+  cursor: pointer;
+}
+
+.palette-swatches {
+  display: flex;
+  gap: 0.6rem;
+}
+
+.palette-swatch {
+  width: 26px;
+  height: 26px;
+  border-radius: 50%;
+  border: 1px solid var(--glass-border);
+}
+
+/* ---------- Galeria de mockups ---------- */
+.project-gallery:empty { display: none; }
+
+.project-gallery {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 1.25rem;
+  width: 100%;
+  margin-top: 1rem;
+  padding: 0;
+}
+
+.gallery-item {
+  position: relative;
+  aspect-ratio: 4 / 3;
+  padding: 0;
+  border: 1px solid var(--glass-border);
+  border-radius: var(--radius);
+  overflow: hidden;
+  cursor: pointer;
+  background: none;
+  transition: transform 0.7s var(--ease), box-shadow 0.7s var(--ease), border-color 0.7s var(--ease);
+}
+
+.gallery-item img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.gallery-item-spotlight {
+  position: absolute;
+  inset: 0;
+  opacity: 0;
+  background: radial-gradient(220px circle at var(--mx, 50%) var(--my, 50%), rgba(255, 255, 255, 0.16), transparent 70%);
+  transition: opacity 0.5s var(--ease);
+  pointer-events: none;
+}
+
+.gallery-item:hover,
+.gallery-item:focus-visible {
+  transform: translateY(-6px);
+  border-color: rgba(255, 255, 255, 0.3);
+  box-shadow: 0 20px 44px rgba(0, 0, 0, 0.35);
+}
+
+.gallery-item:hover .gallery-item-spotlight,
+.gallery-item:focus-visible .gallery-item-spotlight {
+  opacity: 1;
+}
+
+/* ---------- Lightbox ---------- */
+.lightbox {
+  position: fixed;
+  inset: 0;
+  z-index: 200;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(10, 8, 18, 0.88);
+  backdrop-filter: blur(20px) saturate(140%);
+  -webkit-backdrop-filter: blur(20px) saturate(140%);
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.5s var(--ease);
+}
+
+.lightbox.is-open {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.lightbox-img {
+  max-width: min(88vw, 1100px);
+  max-height: 82vh;
+  border-radius: calc(var(--radius) * 0.6);
+  box-shadow: 0 30px 80px rgba(0, 0, 0, 0.5);
+  transform: scale(0.96);
+  transition: transform 0.5s var(--ease);
+}
+
+.lightbox.is-open .lightbox-img {
+  transform: scale(1);
+}
+
+.lightbox-close,
+.lightbox-nav {
+  position: absolute;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  background: var(--glass-bg);
+  border: 1px solid var(--glass-border);
+  backdrop-filter: blur(14px) saturate(140%);
+  -webkit-backdrop-filter: blur(14px) saturate(140%);
+  color: var(--ink);
+  font-size: 1.2rem;
+  cursor: pointer;
+  transition: background 0.4s var(--ease), border-color 0.4s var(--ease);
+}
+
+.lightbox-close:hover,
+.lightbox-nav:hover {
+  background: rgba(255, 255, 255, 0.16);
+  border-color: rgba(0, 201, 167, 0.4);
+}
+
+.lightbox-close {
+  top: 1.5rem;
+  right: 1.5rem;
+}
+
+.lightbox-prev {
+  left: 1.5rem;
+  top: 50%;
+  transform: translateY(-50%);
+}
+
+.lightbox-next {
+  right: 1.5rem;
+  top: 50%;
+  transform: translateY(-50%);
+}
+
+/* ---------- Contact ---------- */
+.contact { text-align: center; }
+.contact .panel { display: flex; flex-direction: column; align-items: center; }
+
+.contact-email-row {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 1.1rem;
+  flex-wrap: wrap;
+}
+
+.copy-email {
+  font-family: var(--mono);
+  font-size: 0.8rem;
+  color: var(--ink-dim);
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 0.4rem 0.2rem;
+  transition: color 0.3s var(--ease);
+}
+
+.copy-email:hover { color: var(--ink); }
+.copy-email.is-copied { color: var(--accent-3); }
+
+.socials {
+  display: flex;
+  gap: 0.9rem;
+  margin-top: 2.75rem;
+}
+
+.social-link {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  color: var(--ink-dim);
+  background: var(--glass-bg);
+  border: 1px solid var(--glass-border);
+  transition: color 0.3s var(--ease), border-color 0.3s var(--ease), background 0.3s var(--ease), transform 0.3s var(--ease);
+}
+
+.social-link svg {
+  width: 20px;
+  height: 20px;
+  fill: currentColor;
+}
+
+.social-link:hover {
+  color: var(--ink);
+  border-color: var(--active-accent, var(--accent-3));
+  background: rgba(0, 201, 167, 0.12);
+  transform: translateY(-3px);
+}
+
+.social-link:focus-visible {
+  outline: 2px dashed var(--active-accent, var(--accent-3));
+  outline-offset: 3px;
+}
+
+/* Toques "terminal": tooltip + scanline, só em dispositivos com hover real */
+@media (hover: hover) and (pointer: fine) {
+  .social-link::before {
+    content: attr(aria-label);
+    position: absolute;
+    top: -2rem;
+    left: 50%;
+    transform: translate(-50%, 6px);
+    font-family: var(--mono);
+    font-size: 0.68rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--active-accent, var(--accent-3));
+    white-space: nowrap;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.25s var(--ease), transform 0.25s var(--ease);
+  }
+
+  .social-link::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    border-radius: 50%;
+    background: linear-gradient(180deg, transparent, rgba(0, 201, 167, 0.4), transparent);
+    opacity: 0;
+    transform: translateY(-100%);
+    pointer-events: none;
+    transition: transform 0.5s var(--ease), opacity 0.5s var(--ease);
+  }
+
+  .social-link:hover::before {
+    opacity: 1;
+    transform: translate(-50%, 0);
+  }
+
+  .social-link:hover::after {
+    opacity: 1;
+    transform: translateY(100%);
+  }
+}
+
+.blink-cursor {
+  display: inline-block;
+  margin-left: 0.15em;
+  animation: blink 1.1s step-end infinite;
+}
+
+@keyframes blink {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0; }
+}
+
+.footer {
+  max-width: 1100px;
+  margin: 4rem auto 0;
+  padding: 0 1.5rem 4rem;
+  color: var(--ink-dim);
+  font-size: 0.8rem;
+}
+
+.footer-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 1rem;
+  border-top: 1px solid var(--glass-border);
+  padding-top: 1.5rem;
+}
+
+.footer-copy { margin: 0; }
+
+.footer-top {
+  font-family: var(--mono);
+  font-size: 0.78rem;
+  color: var(--ink-dim);
+  text-decoration: none;
+  display: inline-block;
+  transition: color 0.3s var(--ease), transform 0.3s var(--ease);
+}
+
+.footer-top:hover {
+  color: var(--ink);
+  transform: translateY(-2px);
+}
+
+/* ---------- Botão flutuante: voltar ao topo ---------- */
+.back-to-top {
+  position: fixed;
+  right: 1.5rem;
+  bottom: 1.5rem;
+  z-index: 40;
+  width: 48px;
+  height: 48px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0;
+  cursor: pointer;
+  color: var(--ink);
+  background: var(--glass-bg);
+  border: 1px solid var(--glass-border);
+  border-radius: 50%;
+  backdrop-filter: blur(14px) saturate(140%);
+  -webkit-backdrop-filter: blur(14px) saturate(140%);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.35);
+  opacity: 0;
+  transform: translateY(12px) scale(0.9);
+  pointer-events: none;
+  transition: opacity 0.35s var(--ease), transform 0.35s var(--ease), color 0.3s var(--ease), border-color 0.3s var(--ease);
+}
+
+.back-to-top svg {
+  width: 20px;
+  height: 20px;
+  transition: transform 0.3s var(--ease);
+}
+
+.back-to-top.is-visible {
+  opacity: 1;
+  transform: translateY(0) scale(1);
+  pointer-events: auto;
+}
+
+.back-to-top:hover,
+.back-to-top:focus-visible {
+  color: var(--active-accent, var(--accent-3));
+  border-color: var(--active-accent, var(--accent-3));
+}
+
+.back-to-top:hover svg,
+.back-to-top:focus-visible svg {
+  transform: translateY(-3px);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .back-to-top { transition: opacity 0.2s linear; }
+  .back-to-top svg,
+  .back-to-top:hover svg,
+  .back-to-top:focus-visible svg { transition: none; transform: none; }
+}
+
+/* ---------- Reveal on scroll ---------- */
+.reveal {
+  opacity: 0;
+  transform: translateY(28px);
+  transition: opacity 0.9s var(--ease), transform 0.9s var(--ease);
+}
+
+.reveal.is-visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* ---------- Responsive ---------- */
+@media (max-width: 640px) {
+  .nav {
+    padding: 0.65rem 1.1rem;
+    gap: 0.75rem;
+  }
+  .nav-logo {
+    font-size: 0.85rem;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+  .nav-links { gap: 0.9rem; }
+  .nav-links a { font-size: 0.82rem; }
+  section { padding: 6rem 1.25rem; }
+
+  /* Otimização de performance: menos blur e uma camada a menos animada */
+  .blob { filter: blur(40px); }
+  .blob-4 { display: none; }
+
+  /* Hero: colapsa a hierarquia editorial para leitura vertical simples */
+  .hero { padding: 6.5rem 1.25rem 3.5rem; }
+  .hero-kicker {
+    position: static;
+    writing-mode: horizontal-tb;
+    transform: none;
+    margin-bottom: 1rem;
+  }
+  .hero-name-row { font-size: clamp(2.8rem, 16vw, 4.4rem); }
+  .hero-name-row--offset { margin-left: 0; margin-top: 0; }
+  .hero-sticker { margin-top: 0.5rem; }
+  .scroll-status { position: static; margin-top: 2rem; }
+
+  /* Labirinto: só a margem direita sobrevive, mais fina */
+  .maze--left { display: none; }
+  .maze--right { width: 20px; }
+
+  /* Rodapé: empilha e centra em ecrãs pequenos */
+  .footer-row { flex-direction: column; text-align: center; }
+
+  /* Galeria de projeto: uma coluna, controlos da lightbox mais pequenos e junto às margens */
+  .project-gallery { grid-template-columns: 1fr; }
+  .lightbox-close,
+  .lightbox-nav {
+    width: 40px;
+    height: 40px;
+    font-size: 1rem;
+  }
+  .lightbox-close { top: 0.75rem; right: 0.75rem; }
+  .lightbox-prev { left: 0.5rem; }
+  .lightbox-next { right: 0.5rem; }
+  .lightbox-img { max-width: 94vw; max-height: 76vh; }
+}

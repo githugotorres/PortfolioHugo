@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Projeto — Hugo Torres</title>
+<meta name="description" content="Detalhe de projeto do portefólio de Hugo Torres.">
+<meta name="theme-color" content="#0a0812">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Projeto — Hugo Torres">
+<meta property="og:description" content="Detalhe de projeto do portefólio de Hugo Torres.">
+<link rel="icon" type="image/svg+xml" href="favicon.svg">
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+  <!-- Fundo surrealista animado -->
+  <div class="bg-blobs">
+    <div class="blob blob-1"></div>
+    <div class="blob blob-2"></div>
+    <div class="blob blob-3"></div>
+    <div class="blob blob-4"></div>
+  </div>
+  <div class="noise-overlay"></div>
+
+  <!-- Blob que segue o cursor -->
+  <div class="cursor-glow" id="cursor-glow"></div>
+
+  <div id="page-content">
+
+    <section class="project-page" id="project-page">
+      <a href="index.html#projects" class="btn btn-glass project-page-back"><span aria-hidden="true">&larr;</span> Voltar</a>
+      <div class="glass panel project-page-panel">
+        <p class="section-kicker" id="project-page-kicker"></p>
+        <h1 class="project-page-title" id="project-page-title"></h1>
+        <p class="project-page-desc" id="project-page-desc"></p>
+        <div class="project-tags" id="project-page-tags"></div>
+      </div>
+      <div class="project-media-hero" id="project-media-hero"></div>
+      <div class="project-gallery" id="project-gallery"></div>
+    </section>
+
+    <div class="lightbox" id="lightbox" aria-hidden="true" role="dialog" aria-modal="true" aria-label="Imagem em destaque">
+      <button type="button" class="lightbox-close" id="lightbox-close" aria-label="Fechar">&times;</button>
+      <button type="button" class="lightbox-nav lightbox-prev" id="lightbox-prev" aria-label="Imagem anterior"><span aria-hidden="true">&larr;</span></button>
+      <img class="lightbox-img" id="lightbox-img" src="" alt="">
+      <button type="button" class="lightbox-nav lightbox-next" id="lightbox-next" aria-label="Imagem seguinte"><span aria-hidden="true">&rarr;</span></button>
+    </div>
+
+    <footer class="footer">
+      <div class="footer-row">
+        <p class="footer-copy">&copy; <span id="year"></span> Hugo Torres. Feito com curiosidade.</p>
+        <a href="index.html#home" class="footer-top">Voltar ao início ↑</a>
+      </div>
+    </footer>
+  </div>
+
+  <script src="data/projects.js"></script>
+  <script src="js/project.js"></script>
+</body>
+</html>
