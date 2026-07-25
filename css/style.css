@@ -1509,7 +1509,13 @@ section {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
   gap: 1.5rem;
-  align-items: start;
+  align-items: stretch;
+}
+
+/* Tira da homepage: cards mais curtos (sem lista nem meta), o preço fica sempre
+   encostado ao fundo para os três alinharem mesmo com descrições de tamanhos diferentes. */
+#como-ajudar .pricing-price {
+  margin-top: auto;
 }
 
 .pricing-card {
