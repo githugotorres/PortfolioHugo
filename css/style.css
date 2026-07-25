@@ -848,10 +848,31 @@ section {
   z-index: 1;
 }
 
+.project-tags[data-plano] span {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  background: rgba(0, 201, 167, 0.16);
+  color: var(--ink);
+  border: 1px solid rgba(0, 201, 167, 0.45);
+  font-weight: 600;
+}
+
+.project-tags[data-plano] span::after {
+  content: "\2192";
+  transition: transform 0.3s var(--ease);
+}
+
 .project-tags[data-plano]:hover span,
 .project-tags[data-plano]:focus-visible span {
   color: var(--ink);
-  background: rgba(0, 201, 167, 0.28);
+  background: rgba(0, 201, 167, 0.32);
+  border-color: rgba(0, 201, 167, 0.7);
+}
+
+.project-tags[data-plano]:hover span::after,
+.project-tags[data-plano]:focus-visible span::after {
+  transform: translateX(3px);
 }
 
 .project-tags[data-plano]:focus-visible {
