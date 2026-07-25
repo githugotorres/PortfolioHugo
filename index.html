@@ -98,10 +98,10 @@
     <nav class="glass nav">
       <a href="#home" class="nav-logo">O meu portefólio</a>
       <div class="nav-links">
-        <a href="#about">Sobre</a>
+        <a href="sobre.html">Sobre</a>
         <a href="servicos.html">Serviços</a>
-        <a href="#projects">Projetos</a>
-        <a href="#contact">Contacto</a>
+        <a href="projetos.html">Projetos</a>
+        <a href="contacto.html">Contacto</a>
       </div>
     </nav>
   </header>
@@ -122,173 +122,11 @@
     <p class="hero-sticker reveal" style="transition-delay: 220ms;">Crio identidades visuais e vídeo curto para marcas que precisam de comunicar melhor. Ponte de Lima e Porto, ou remoto para todo o país.</p>
 
     <div class="hero-actions reveal" style="transition-delay: 290ms;">
-      <a href="#projects" class="btn-block glass btn-block--solid">Ver trabalhos</a>
+      <a href="projetos.html" class="btn-block glass btn-block--solid">Ver trabalhos</a>
       <a href="servicos.html" class="btn-block glass btn-block--outline">Pedir orçamento</a>
     </div>
 
     <p class="scroll-status reveal" style="transition-delay: 360ms;">Scroll <span id="scroll-progress">// 00%</span></p>
-  </section>
-
-  <!-- Sobre -->
-  <section id="about" class="about">
-    <p class="section-kicker reveal">2 Quem sou eu?<span class="blink-cursor" aria-hidden="true">_</span></p>
-    <div class="glass panel about-panel reveal">
-      <div class="about-grid">
-        <div class="about-copy">
-          <h2 class="section-title reveal" style="transition-delay: 80ms;">Sobre mim</h2>
-          <p class="about-text reveal" style="transition-delay: 150ms;">
-            Sou o Hugo Torres, licenciado em Tecnologias e Design de Multimédia pelo Instituto Politécnico de Viseu.
-            O curso deixou-me a meio caminho entre o técnico e o criativo, e é exatamente aí que gosto de trabalhar.
-          </p>
-          <p class="about-text reveal" style="transition-delay: 220ms;">
-            Trabalho em identidade visual, design gráfico e vídeo curto. Na prática, isso quer dizer que
-            posso desenhar a marca de raiz e depois produzir o conteúdo que a faz aparecer, sem ter de
-            explicar a outra pessoa aquilo que já pensei.
-          </p>
-          <p class="about-text reveal" style="transition-delay: 260ms;">
-            Gosto de projetos onde há uma decisão para tomar e não apenas um ficheiro para exportar. Trabalho
-            a partir de Ponte de Lima e do Porto, presencialmente quando faz sentido, remotamente para o
-            resto do país.
-          </p>
-        </div>
-        <div class="skills-categories">
-          <div class="about-photo reveal" style="transition-delay: 110ms;">
-            <img src="assets/FotoPro.jpg" alt="Hugo Torres" loading="lazy">
-          </div>
-          <div class="skills-category reveal" style="transition-delay: 260ms;">
-            <p class="skills-category-label"><span class="skills-index">01</span>Marca e Design</p>
-            <div class="skills-badges">
-              <span class="skill-badge">Photoshop</span>
-              <span class="skill-badge">Illustrator</span>
-              <span class="skill-badge">Identidade Visual</span>
-              <span class="skill-badge">Design Editorial</span>
-            </div>
-          </div>
-          <div class="skills-category reveal" style="transition-delay: 330ms;">
-            <p class="skills-category-label"><span class="skills-index">02</span>Vídeo e Conteúdo</p>
-            <div class="skills-badges">
-              <span class="skill-badge">Premiere Pro</span>
-              <span class="skill-badge">After Effects</span>
-              <span class="skill-badge">Motion Graphics</span>
-              <span class="skill-badge">Conteúdo para Redes</span>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- Projetos -->
-  <section id="projects" class="projects">
-    <p class="section-kicker section-kicker--center reveal">3<span class="blink-cursor" aria-hidden="true">_</span></p>
-    <h2 class="section-title reveal">Projetos</h2>
-    <p class="section-note reveal">Três trabalhos, do rebranding completo à gestão de conteúdo mensal. Em cada um explico o que estava em causa e as decisões que tomei.</p>
-    <div class="projects-grid" id="projects-grid">
-      <!-- Preenchido via JS a partir de data/projects.js -->
-    </div>
-  </section>
-
-  <!--
-    {{ FALTA: testemunhos reais para a secção de prova social. Descomenta este bloco e substitui
-       cada bloco de exemplo por citações reais (texto, nome, função e empresa de quem fala).
-       Não publicar exemplos inventados. Se inserires isto entre Projetos e Contacto, ajusta a
-       numeração dos kickers de secção (Contacto passa de "4" a "5"). }}
-
-  <section id="testimonials" class="testimonials">
-    <p class="section-kicker section-kicker--center reveal">4<span class="blink-cursor" aria-hidden="true">_</span></p>
-    <h2 class="section-title reveal">O que dizem</h2>
-    <div class="testimonials-grid">
-      <blockquote class="glass panel testimonial-card reveal">
-        <p class="testimonial-quote">"Citação real aqui."</p>
-        <footer class="testimonial-author">
-          <span class="testimonial-name">Nome</span>
-          <span class="testimonial-role">Função, Empresa</span>
-        </footer>
-      </blockquote>
-    </div>
-  </section>
-  -->
-
-  <!-- Contacto -->
-  <section id="contact" class="contact">
-    <p class="section-kicker section-kicker--center reveal">4<span class="blink-cursor" aria-hidden="true">_</span></p>
-    <div class="glass panel reveal">
-      <h2 class="section-title">Vamos falar?</h2>
-      <p class="about-text">Conta-me o que precisas, mesmo que ainda esteja tudo em bruto. Respondo em 24 horas em dias úteis.</p>
-
-      <!-- {{ FALTA: ID do formulário Formspree (cria uma conta em formspree.io, cria um formulário e substitui SEU_ID_AQUI no action abaixo) }} -->
-      <form class="contact-form" id="contact-form" action="https://formspree.io/f/SEU_ID_AQUI" method="POST" novalidate>
-        <input type="hidden" name="_subject" value="Novo pedido de orçamento, site">
-        <input type="text" name="_gotcha" class="form-honeypot" tabindex="-1" autocomplete="off" aria-hidden="true">
-
-        <div class="form-row">
-          <label for="cf-nome">Nome</label>
-          <input type="text" id="cf-nome" name="nome" autocomplete="name" required>
-        </div>
-
-        <div class="form-row">
-          <label for="cf-email">Email</label>
-          <input type="email" id="cf-email" name="email" autocomplete="email" required>
-        </div>
-
-        <div class="form-row">
-          <label for="cf-tipo">Tipo de projeto</label>
-          <select id="cf-tipo" name="tipo_de_projeto" required>
-            <option value="" disabled selected>Escolhe uma opção</option>
-            <option value="Identidade visual ou rebranding">Identidade visual ou rebranding</option>
-            <option value="Vídeo ou motion graphics">Vídeo ou motion graphics</option>
-            <option value="Conteúdo para redes sociais">Conteúdo para redes sociais</option>
-            <option value="Avença mensal">Avença mensal</option>
-            <option value="Outra coisa">Outra coisa</option>
-          </select>
-        </div>
-
-        <div class="form-row-grid">
-          <div class="form-row">
-            <label for="cf-prazo">Prazo desejado</label>
-            <select id="cf-prazo" name="prazo_desejado">
-              <option value="" disabled selected>Escolhe uma opção</option>
-              <option value="O quanto antes">O quanto antes</option>
-              <option value="Nas próximas semanas">Nas próximas semanas</option>
-              <option value="Ainda estou a planear">Ainda estou a planear</option>
-            </select>
-          </div>
-
-          <div class="form-row">
-            <label for="cf-orcamento">Orçamento aproximado</label>
-            <select id="cf-orcamento" name="orcamento_aproximado">
-              <option value="" disabled selected>Escolhe uma opção</option>
-              <option value="Até 500 €">Até 500 €</option>
-              <option value="500 a 1500 €">500 a 1500 €</option>
-              <option value="Mais de 1500 €">Mais de 1500 €</option>
-              <option value="Ainda não sei">Ainda não sei</option>
-            </select>
-          </div>
-        </div>
-
-        <div class="form-row">
-          <label for="cf-mensagem">Mensagem</label>
-          <textarea id="cf-mensagem" name="mensagem" rows="5" required></textarea>
-        </div>
-
-        <button type="submit" class="btn btn-primary form-submit" id="contact-form-submit">Enviar</button>
-
-        <p class="form-status" id="contact-form-status" role="status" aria-live="polite" hidden></p>
-      </form>
-
-      <div class="contact-email-row">
-        <a href="mailto:work.hugotorres@gmail.com" class="btn btn-glass">Envia-me um email</a>
-        <button type="button" class="copy-email" id="copy-email" data-email="work.hugotorres@gmail.com" aria-live="polite">// copiar</button>
-      </div>
-      <div class="socials">
-        <a href="https://www.linkedin.com/in/hugotorres11/" class="social-link" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn">
-          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20.45 20.45h-3.55v-5.57c0-1.33-.02-3.03-1.85-3.03-1.85 0-2.14 1.45-2.14 2.94v5.66H9.36V9h3.41v1.56h.05c.48-.9 1.64-1.85 3.38-1.85 3.61 0 4.28 2.38 4.28 5.47v6.27zM5.34 7.43a2.06 2.06 0 1 1 0-4.12 2.06 2.06 0 0 1 0 4.12zM7.12 20.45H3.56V9h3.56v11.45z"/></svg>
-        </a>
-        <a href="https://www.instagram.com/hugotorres11_/" class="social-link" target="_blank" rel="noopener noreferrer" aria-label="Instagram">
-          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2.16c3.2 0 3.58.01 4.85.07 1.17.05 1.8.24 2.22.4.56.22.96.48 1.38.9.42.42.68.82.9 1.38.16.42.35 1.05.4 2.22.06 1.27.07 1.65.07 4.85s-.01 3.58-.07 4.85c-.05 1.17-.24 1.8-.4 2.22-.22.56-.48.96-.9 1.38-.42.42-.82.68-1.38.9-.42.16-1.05.35-2.22.4-1.27.06-1.65.07-4.85.07s-3.58-.01-4.85-.07c-1.17-.05-1.8-.24-2.22-.4a3.72 3.72 0 0 1-1.38-.9 3.72 3.72 0 0 1-.9-1.38c-.16-.42-.35-1.05-.4-2.22-.06-1.27-.07-1.65-.07-4.85s.01-3.58.07-4.85c.05-1.17.24-1.8.4-2.22.22-.56.48-.96.9-1.38.42-.42.82-.68 1.38-.9.42-.16 1.05-.35 2.22-.4C8.42 2.17 8.8 2.16 12 2.16zm0 1.62c-3.15 0-3.5.01-4.73.07-1.03.05-1.6.22-1.97.36-.5.19-.85.42-1.22.79-.37.37-.6.72-.79 1.22-.14.37-.31.94-.36 1.97-.06 1.23-.07 1.58-.07 4.73s.01 3.5.07 4.73c.05 1.03.22 1.6.36 1.97.19.5.42.85.79 1.22.37.37.72.6 1.22.79.37.14.94.31 1.97.36 1.23.06 1.58.07 4.73.07s3.5-.01 4.73-.07c1.03-.05 1.6-.22 1.97-.36.5-.19.85-.42 1.22-.79.37-.37.6-.72.79-1.22.14-.37.31-.94.36-1.97.06-1.23.07-1.58.07-4.73s-.01-3.5-.07-4.73c-.05-1.03-.22-1.6-.36-1.97a3.28 3.28 0 0 0-.79-1.22 3.28 3.28 0 0 0-1.22-.79c-.37-.14-.94-.31-1.97-.36-1.23-.06-1.58-.07-4.73-.07zm0 4.14a5.08 5.08 0 1 1 0 10.16 5.08 5.08 0 0 1 0-10.16zm0 8.38a3.3 3.3 0 1 0 0-6.6 3.3 3.3 0 0 0 0 6.6zm6.47-8.58a1.19 1.19 0 1 1-2.38 0 1.19 1.19 0 0 1 2.38 0z"/></svg>
-        </a>
-      </div>
-    </div>
   </section>
 
   </main>
@@ -308,7 +146,6 @@
     </svg>
   </button>
 
-  <script src="data/projects.js"></script>
   <script src="js/main.js"></script>
 </body>
 </html>
