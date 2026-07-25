@@ -606,7 +606,15 @@ section {
 
 .projects > .section-title {
   text-align: center;
-  margin-bottom: 3rem;
+  margin-bottom: 0.75rem;
+}
+
+.projects > .section-note {
+  text-align: center;
+  color: var(--ink-dim);
+  font-size: 1.05rem;
+  max-width: 56ch;
+  margin: 0 auto 3rem;
 }
 
 .section-kicker {
