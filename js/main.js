@@ -373,7 +373,7 @@ const $$ = (sel, ctx = document) => [...ctx.querySelectorAll(sel)];
   const submitBtn = $("#contact-form-submit");
   if (!form || !statusEl || !submitBtn) return;
 
-  const successMessage = "Recebido. Respondo em 48 horas em dias úteis. Se for urgente, escreve diretamente para work.hugotorres@gmail.com";
+  const successMessage = "Recebido. Respondo em 24 horas em dias úteis. Se for urgente, escreve diretamente para work.hugotorres@gmail.com";
   const errorMessage = "Não consegui enviar. Tenta outra vez ou escreve diretamente para work.hugotorres@gmail.com";
   const submitLabel = submitBtn.textContent;
 
