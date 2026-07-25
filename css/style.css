@@ -909,6 +909,23 @@ section {
   transform: translate(4px, -4px);
 }
 
+/* Tira da homepage: a etiqueta do plano e a seta partilham a mesma linha, encostadas
+   ao fundo do card, em vez da seta sozinha no canto. */
+.project-card-footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  margin-top: auto;
+  padding-top: 1.25rem;
+}
+
+.project-card-footer .project-arrow {
+  align-self: auto;
+  margin-top: 0;
+  padding-top: 0;
+}
+
 /* ---------- Página individual do projeto ---------- */
 .project-page {
   min-height: 100vh;
