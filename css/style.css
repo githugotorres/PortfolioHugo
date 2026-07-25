@@ -1092,6 +1092,95 @@ section {
 .contact { text-align: center; }
 .contact .panel { display: flex; flex-direction: column; align-items: center; }
 
+/* ---------- Formulário de contacto ---------- */
+.contact-form {
+  width: 100%;
+  max-width: 560px;
+  display: flex;
+  flex-direction: column;
+  gap: 1.1rem;
+  margin: 2rem 0 1.75rem;
+  text-align: left;
+}
+
+.form-row {
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+}
+
+.form-row-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  gap: 1.1rem;
+}
+
+.form-row label {
+  font-family: var(--mono);
+  font-size: 0.72rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--ink-dim);
+}
+
+.form-row input,
+.form-row select,
+.form-row textarea {
+  font: inherit;
+  font-size: 0.95rem;
+  color: var(--ink);
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid var(--glass-border);
+  border-radius: 12px;
+  padding: 0.75rem 0.9rem;
+  outline: none;
+  transition: border-color 0.3s var(--ease), background 0.3s var(--ease);
+}
+
+.form-row textarea { resize: vertical; min-height: 120px; }
+
+.form-row input:focus,
+.form-row select:focus,
+.form-row textarea:focus {
+  border-color: var(--active-accent, var(--accent-3));
+  background: rgba(255, 255, 255, 0.1);
+}
+
+.form-row input:invalid:not(:placeholder-shown),
+.form-row select:invalid,
+.form-row textarea:invalid:not(:placeholder-shown) {
+  border-color: rgba(255, 95, 109, 0.6);
+}
+
+.form-honeypot {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  opacity: 0;
+  pointer-events: none;
+}
+
+.form-submit { align-self: flex-start; }
+
+.form-status {
+  border-radius: 12px;
+  padding: 0.9rem 1.1rem;
+  font-size: 0.92rem;
+  line-height: 1.6;
+  text-align: left;
+}
+
+.form-status.is-success {
+  background: rgba(0, 201, 167, 0.12);
+  border: 1px solid rgba(0, 201, 167, 0.4);
+}
+
+.form-status.is-error {
+  background: rgba(255, 95, 109, 0.14);
+  border: 1px solid rgba(255, 95, 109, 0.5);
+}
+
 .contact-email-row {
   display: flex;
   align-items: center;

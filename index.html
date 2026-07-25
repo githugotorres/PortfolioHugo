@@ -193,9 +193,70 @@
     <p class="section-kicker section-kicker--center reveal">4<span class="blink-cursor" aria-hidden="true">_</span></p>
     <div class="glass panel reveal">
       <h2 class="section-title">Vamos falar?</h2>
-      <p class="about-text">Estou disponível para novos projetos e colaborações.</p>
+      <p class="about-text">Conta-me o que precisas, mesmo que ainda esteja tudo em bruto. Respondo em 24 horas em dias úteis.</p>
+
+      <!-- {{ FALTA: ID do formulário Formspree (cria uma conta em formspree.io, cria um formulário e substitui SEU_ID_AQUI no action abaixo) }} -->
+      <form class="contact-form" id="contact-form" action="https://formspree.io/f/SEU_ID_AQUI" method="POST" novalidate>
+        <input type="hidden" name="_subject" value="Novo pedido de orçamento, site">
+        <input type="text" name="_gotcha" class="form-honeypot" tabindex="-1" autocomplete="off" aria-hidden="true">
+
+        <div class="form-row">
+          <label for="cf-nome">Nome</label>
+          <input type="text" id="cf-nome" name="nome" autocomplete="name" required>
+        </div>
+
+        <div class="form-row">
+          <label for="cf-email">Email</label>
+          <input type="email" id="cf-email" name="email" autocomplete="email" required>
+        </div>
+
+        <div class="form-row">
+          <label for="cf-tipo">Tipo de projeto</label>
+          <select id="cf-tipo" name="tipo_de_projeto" required>
+            <option value="" disabled selected>Escolhe uma opção</option>
+            <option value="Identidade visual ou rebranding">Identidade visual ou rebranding</option>
+            <option value="Vídeo ou motion graphics">Vídeo ou motion graphics</option>
+            <option value="Conteúdo para redes sociais">Conteúdo para redes sociais</option>
+            <option value="Avença mensal">Avença mensal</option>
+            <option value="Outra coisa">Outra coisa</option>
+          </select>
+        </div>
+
+        <div class="form-row-grid">
+          <div class="form-row">
+            <label for="cf-prazo">Prazo desejado</label>
+            <select id="cf-prazo" name="prazo_desejado">
+              <option value="" disabled selected>Escolhe uma opção</option>
+              <option value="O quanto antes">O quanto antes</option>
+              <option value="Nas próximas semanas">Nas próximas semanas</option>
+              <option value="Ainda estou a planear">Ainda estou a planear</option>
+            </select>
+          </div>
+
+          <div class="form-row">
+            <label for="cf-orcamento">Orçamento aproximado</label>
+            <select id="cf-orcamento" name="orcamento_aproximado">
+              <option value="" disabled selected>Escolhe uma opção</option>
+              <option value="Até 500 €">Até 500 €</option>
+              <option value="500 a 1500 €">500 a 1500 €</option>
+              <option value="Mais de 1500 €">Mais de 1500 €</option>
+              <option value="Ainda não sei">Ainda não sei</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="form-row">
+          <label for="cf-mensagem">Mensagem</label>
+          <textarea id="cf-mensagem" name="mensagem" rows="5" required></textarea>
+        </div>
+
+        <button type="submit" class="btn btn-primary form-submit" id="contact-form-submit">Enviar</button>
+
+        <p class="form-status" id="contact-form-status" role="status" aria-live="polite" hidden></p>
+      </form>
+
       <div class="contact-email-row">
-        <a href="mailto:work.hugotorres@gmail.com" class="btn btn-primary">Envia-me um email</a>
+        <a href="mailto:work.hugotorres@gmail.com" class="btn btn-glass">Envia-me um email</a>
         <button type="button" class="copy-email" id="copy-email" data-email="work.hugotorres@gmail.com" aria-live="polite">// copiar</button>
       </div>
       <div class="socials">

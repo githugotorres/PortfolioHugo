@@ -366,6 +366,56 @@ const $$ = (sel, ctx = document) => [...ctx.querySelectorAll(sel)];
   });
 })();
 
+// ---------- Formulário de contacto (Formspree, submissão via fetch) ----------
+(function contactForm() {
+  const form = $("#contact-form");
+  const statusEl = $("#contact-form-status");
+  const submitBtn = $("#contact-form-submit");
+  if (!form || !statusEl || !submitBtn) return;
+
+  const successMessage = "Recebido. Respondo em 24 horas em dias úteis. Se for urgente, escreve diretamente para work.hugotorres@gmail.com";
+  const errorMessage = "Não consegui enviar. Tenta outra vez ou escreve diretamente para work.hugotorres@gmail.com";
+  const submitLabel = submitBtn.textContent;
+
+  function showStatus(message, isError) {
+    statusEl.textContent = message;
+    statusEl.classList.toggle("is-success", !isError);
+    statusEl.classList.toggle("is-error", isError);
+    statusEl.hidden = false;
+  }
+
+  form.addEventListener("submit", async (e) => {
+    e.preventDefault();
+
+    if (!form.reportValidity()) return;
+
+    // Honeypot: se o campo escondido vier preenchido, é um bot — não envia.
+    if (form.elements["_gotcha"] && form.elements["_gotcha"].value) return;
+
+    statusEl.hidden = true;
+    submitBtn.disabled = true;
+    submitBtn.textContent = "A enviar...";
+
+    try {
+      const response = await fetch(form.action, {
+        method: "POST",
+        body: new FormData(form),
+        headers: { Accept: "application/json" }
+      });
+
+      if (!response.ok) throw new Error("submit failed");
+
+      showStatus(successMessage, false);
+      form.reset();
+    } catch {
+      showStatus(errorMessage, true);
+    } finally {
+      submitBtn.disabled = false;
+      submitBtn.textContent = submitLabel;
+    }
+  });
+})();
+
 // ---------- Blur dinâmico ao fazer scroll (desfoca a subir, foca a descer) ----------
 (function scrollFocusBlur() {
   if (prefersReducedMotion) return;
