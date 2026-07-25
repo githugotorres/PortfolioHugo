@@ -481,50 +481,16 @@ const $$ = (sel, ctx = document) => [...ctx.querySelectorAll(sel)];
   items.forEach((el) => io.observe(el));
 })();
 
-// ---------- Renderizar projetos a partir de data/projects.js ----------
-(function renderProjects() {
-  const grid = $("#projects-grid");
-  if (!grid || typeof PROJECTS === "undefined") return;
-
-  PROJECTS.forEach((project, i) => {
-    const card = document.createElement("a");
-    card.href = project.href || `project.html?id=${i + 1}`;
-    card.className = "project-card glass reveal";
-    card.style.transitionDelay = `${i * 70}ms`;
-
-    const [c1, c2] = project.gradient || ["#ff5f6d", "#845ec2"];
-    card.innerHTML = `
-      <span class="project-index" aria-hidden="true">${String(i + 1).padStart(2, "0")}</span>
-      <div class="project-glow" aria-hidden="true" style="background: radial-gradient(circle at 30% 20%, ${c1}66, transparent 60%), radial-gradient(circle at 80% 90%, ${c2}66, transparent 60%);"></div>
-      <div class="project-spotlight" aria-hidden="true"></div>
-      <div class="project-tags">${(project.tags || []).map((t) => `<span>${t}</span>`).join("")}</div>
-      <h3 class="project-title">${project.title}</h3>
-      <p class="project-desc">${project.description}</p>
-      <span class="project-arrow" aria-hidden="true">&#8594;</span>
-    `;
-    grid.appendChild(card);
-  });
-
-  // Observa os novos elementos .reveal criados dinamicamente (reversível, mesmo motivo que revealOnScroll)
-  if ("IntersectionObserver" in window && !prefersReducedMotion) {
-    const io = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((entry) => {
-          entry.target.classList.toggle("is-visible", entry.isIntersecting);
-        });
-      },
-      { threshold: 0.15 }
-    );
-    $$(".project-card").forEach((el) => io.observe(el));
-  } else {
-    $$(".project-card").forEach((el) => el.classList.add("is-visible"));
-  }
+// ---------- Cards de projeto (conteúdo já vem no HTML, isto só liga o spotlight) ----------
+(function projectCardSpotlight() {
+  const cards = $$(".project-card");
+  if (!cards.length) return;
 
   // Spotlight que segue o rato (rect cacheado, escrita agrupada por rAF).
   // O levantamento do card é só CSS (:hover) — nada aqui mexe em transform,
   // por isso não há tilt 3D nem conflito com a transição.
   if (!prefersReducedMotion && window.matchMedia("(pointer: fine)").matches) {
-    $$(".project-card").forEach((card) => {
+    cards.forEach((card) => {
       let rect = null;
       let ticking = false;
       let lastEvent = null;
