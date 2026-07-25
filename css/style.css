@@ -435,11 +435,24 @@ section {
   display: inline-block;
   align-self: flex-start;
   max-width: 44ch;
-  margin: 1.5rem 0 1.75rem 0.2em;
+  margin: 1.5rem 0 0.6rem 0.2em;
   color: var(--ink-dim);
   font-size: 0.98rem;
   font-weight: 500;
   line-height: 1.55;
+}
+
+/* Linha da zona geográfica: informação de contexto, peso visual abaixo da promessa */
+.hero-local {
+  align-self: flex-start;
+  max-width: 44ch;
+  margin: 0 0 1.75rem 0.2em;
+  color: var(--ink-dim);
+  opacity: 0.72;
+  font-size: 0.86rem;
+  font-weight: 400;
+  letter-spacing: 0.01em;
+  line-height: 1.5;
 }
 
 .hero-actions {
