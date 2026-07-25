@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Sobre | Hugo Torres, design de marca e vídeo</title>
+<meta name="description" content="Hugo Torres, licenciado em Tecnologias e Design de Multimédia pelo Instituto Politécnico de Viseu. Identidade visual, design gráfico e vídeo curto a partir de Ponte de Lima e Porto.">
+<meta name="theme-color" content="#0a0812">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Sobre | Hugo Torres, design de marca e vídeo">
+<meta property="og:description" content="Hugo Torres, licenciado em Tecnologias e Design de Multimédia pelo Instituto Politécnico de Viseu. Identidade visual, design gráfico e vídeo curto a partir de Ponte de Lima e Porto.">
+<meta property="og:url" content="https://portefoliohugotorres.netlify.app/sobre.html">
+<meta property="og:image" content="assets/og-image.jpg">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Sobre | Hugo Torres, design de marca e vídeo">
+<meta name="twitter:description" content="Hugo Torres, licenciado em Tecnologias e Design de Multimédia pelo Instituto Politécnico de Viseu. Identidade visual, design gráfico e vídeo curto a partir de Ponte de Lima e Porto.">
+<meta name="twitter:image" content="assets/og-image.jpg">
+<link rel="icon" type="image/jpeg" href="assets/favicon.jpg">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+  <!-- Fundo surrealista animado -->
+  <div class="bg-blobs">
+    <div class="blob-layer" data-depth="40"><div class="blob blob-1"></div></div>
+    <div class="blob-layer" data-depth="60"><div class="blob blob-2"></div></div>
+    <div class="blob-layer" data-depth="30"><div class="blob blob-3"></div></div>
+    <div class="blob-layer" data-depth="70"><div class="blob blob-4"></div></div>
+  </div>
+  <div class="noise-overlay"></div>
+
+  <!-- Blob que segue o cursor -->
+  <div class="cursor-glow" id="cursor-glow"></div>
+
+  <a href="#page-content" class="skip-link">Saltar para o conteúdo</a>
+
+  <div id="page-content" tabindex="-1">
+
+  <!-- Navegação -->
+  <header>
+    <nav class="glass nav">
+      <a href="index.html#home" class="nav-logo">O meu portefólio</a>
+      <div class="nav-links">
+        <a href="sobre.html" class="is-active">Sobre</a>
+        <a href="servicos.html">Serviços</a>
+        <a href="projetos.html">Projetos</a>
+        <a href="contacto.html">Contacto</a>
+      </div>
+    </nav>
+  </header>
+
+  <main>
+
+  <!-- Sobre -->
+  <section id="sobre" class="about">
+    <p class="hero-note reveal">// sobre mim</p>
+    <div class="glass panel about-panel reveal">
+      <div class="about-grid">
+        <div class="about-copy">
+          <h1 class="section-title reveal" style="transition-delay: 80ms;">Sobre mim</h1>
+          <p class="about-text reveal" style="transition-delay: 150ms;">
+            Sou o Hugo Torres, licenciado em Tecnologias e Design de Multimédia pelo Instituto Politécnico de Viseu.
+            O curso deixou-me a meio caminho entre o técnico e o criativo, e é exatamente aí que gosto de trabalhar.
+          </p>
+          <p class="about-text reveal" style="transition-delay: 220ms;">
+            Trabalho em identidade visual, design gráfico e vídeo curto. Na prática, isso quer dizer que
+            posso desenhar a marca de raiz e depois produzir o conteúdo que a faz aparecer, sem ter de
+            explicar a outra pessoa aquilo que já pensei.
+          </p>
+          <p class="about-text reveal" style="transition-delay: 260ms;">
+            Gosto de projetos onde há uma decisão para tomar e não apenas um ficheiro para exportar. Trabalho
+            a partir de Ponte de Lima e do Porto, presencialmente quando faz sentido, remotamente para o
+            resto do país.
+          </p>
+        </div>
+        <div class="skills-categories">
+          <div class="about-photo reveal" style="transition-delay: 110ms;">
+            <img src="assets/FotoPro.jpg" alt="Hugo Torres" loading="lazy">
+          </div>
+          <div class="skills-category reveal" style="transition-delay: 260ms;">
+            <p class="skills-category-label"><span class="skills-index">01</span>Marca e Design</p>
+            <div class="skills-badges">
+              <span class="skill-badge">Photoshop</span>
+              <span class="skill-badge">Illustrator</span>
+              <span class="skill-badge">Identidade Visual</span>
+              <span class="skill-badge">Design Editorial</span>
+            </div>
+          </div>
+          <div class="skills-category reveal" style="transition-delay: 330ms;">
+            <p class="skills-category-label"><span class="skills-index">02</span>Vídeo e Conteúdo</p>
+            <div class="skills-badges">
+              <span class="skill-badge">Premiere Pro</span>
+              <span class="skill-badge">After Effects</span>
+              <span class="skill-badge">Motion Graphics</span>
+              <span class="skill-badge">Conteúdo para Redes</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  </main>
+
+  <footer class="footer">
+    <div class="footer-row">
+      <p class="footer-copy">&copy; <span id="year"></span> Hugo Torres, design de marca e vídeo. Ponte de Lima e Porto. work.hugotorres@gmail.com</p>
+      <a href="index.html#home" class="footer-top">Voltar ao início ↑</a>
+    </div>
+  </footer>
+
+  </div>
+
+  <button type="button" class="back-to-top" id="back-to-top" aria-label="Voltar ao topo">
+    <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+      <path d="M12 19V5M12 5l-6 6M12 5l6 6" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+    </svg>
+  </button>
+
+  <script src="js/main.js"></script>
+</body>
+</html>

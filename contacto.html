@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Contacto | Hugo Torres, design de marca e vídeo</title>
+<meta name="description" content="Fala comigo sobre o teu projeto de identidade visual, vídeo ou conteúdo para redes sociais. Respondo em 24 horas em dias úteis. Ponte de Lima, Porto e remoto.">
+<meta name="theme-color" content="#0a0812">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Contacto | Hugo Torres, design de marca e vídeo">
+<meta property="og:description" content="Fala comigo sobre o teu projeto de identidade visual, vídeo ou conteúdo para redes sociais. Respondo em 24 horas em dias úteis. Ponte de Lima, Porto e remoto.">
+<meta property="og:url" content="https://portefoliohugotorres.netlify.app/contacto.html">
+<meta property="og:image" content="assets/og-image.jpg">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Contacto | Hugo Torres, design de marca e vídeo">
+<meta name="twitter:description" content="Fala comigo sobre o teu projeto de identidade visual, vídeo ou conteúdo para redes sociais. Respondo em 24 horas em dias úteis. Ponte de Lima, Porto e remoto.">
+<meta name="twitter:image" content="assets/og-image.jpg">
+<link rel="icon" type="image/jpeg" href="assets/favicon.jpg">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+  <!-- Fundo surrealista animado -->
+  <div class="bg-blobs">
+    <div class="blob-layer" data-depth="40"><div class="blob blob-1"></div></div>
+    <div class="blob-layer" data-depth="60"><div class="blob blob-2"></div></div>
+    <div class="blob-layer" data-depth="30"><div class="blob blob-3"></div></div>
+    <div class="blob-layer" data-depth="70"><div class="blob blob-4"></div></div>
+  </div>
+  <div class="noise-overlay"></div>
+
+  <!-- Blob que segue o cursor -->
+  <div class="cursor-glow" id="cursor-glow"></div>
+
+  <a href="#page-content" class="skip-link">Saltar para o conteúdo</a>
+
+  <div id="page-content" tabindex="-1">
+
+  <!-- Navegação -->
+  <header>
+    <nav class="glass nav">
+      <a href="index.html#home" class="nav-logo">O meu portefólio</a>
+      <div class="nav-links">
+        <a href="sobre.html">Sobre</a>
+        <a href="servicos.html">Serviços</a>
+        <a href="projetos.html">Projetos</a>
+        <a href="contacto.html" class="is-active">Contacto</a>
+      </div>
+    </nav>
+  </header>
+
+  <main>
+
+  <!--
+    {{ FALTA: testemunhos reais para a secção de prova social. Descomenta este bloco e substitui
+       cada bloco de exemplo por citações reais (texto, nome, função e empresa de quem fala).
+       Não publicar exemplos inventados. }}
+
+  <section id="testemunhos" class="testimonials">
+    <p class="hero-note reveal">// o que dizem</p>
+    <h2 class="section-title reveal" style="text-align:center;">O que dizem</h2>
+    <div class="testimonials-grid">
+      <blockquote class="glass panel testimonial-card reveal">
+        <p class="testimonial-quote">"Citação real aqui."</p>
+        <footer class="testimonial-author">
+          <span class="testimonial-name">Nome</span>
+          <span class="testimonial-role">Função, Empresa</span>
+        </footer>
+      </blockquote>
+    </div>
+  </section>
+  -->
+
+  <!-- Contacto -->
+  <section id="contacto" class="contact">
+    <p class="hero-note reveal">// contacto</p>
+    <div class="glass panel reveal">
+      <h1 class="section-title">Vamos falar?</h1>
+      <p class="about-text">Conta-me o que precisas, mesmo que ainda esteja tudo em bruto. Respondo em 24 horas em dias úteis.</p>
+
+      <!-- {{ FALTA: ID do formulário Formspree (cria uma conta em formspree.io, cria um formulário e substitui SEU_ID_AQUI no action abaixo) }} -->
+      <form class="contact-form" id="contact-form" action="https://formspree.io/f/SEU_ID_AQUI" method="POST" novalidate>
+        <input type="hidden" name="_subject" value="Novo pedido de orçamento, site">
+        <input type="text" name="_gotcha" class="form-honeypot" tabindex="-1" autocomplete="off" aria-hidden="true">
+
+        <div class="form-row">
+          <label for="cf-nome">Nome</label>
+          <input type="text" id="cf-nome" name="nome" autocomplete="name" required>
+        </div>
+
+        <div class="form-row">
+          <label for="cf-email">Email</label>
+          <input type="email" id="cf-email" name="email" autocomplete="email" required>
+        </div>
+
+        <div class="form-row">
+          <label for="cf-tipo">Tipo de projeto</label>
+          <select id="cf-tipo" name="tipo_de_projeto" required>
+            <option value="" disabled selected>Escolhe uma opção</option>
+            <option value="Identidade visual ou rebranding">Identidade visual ou rebranding</option>
+            <option value="Vídeo ou motion graphics">Vídeo ou motion graphics</option>
+            <option value="Conteúdo para redes sociais">Conteúdo para redes sociais</option>
+            <option value="Avença mensal">Avença mensal</option>
+            <option value="Outra coisa">Outra coisa</option>
+          </select>
+        </div>
+
+        <div class="form-row-grid">
+          <div class="form-row">
+            <label for="cf-prazo">Prazo desejado</label>
+            <select id="cf-prazo" name="prazo_desejado">
+              <option value="" disabled selected>Escolhe uma opção</option>
+              <option value="O quanto antes">O quanto antes</option>
+              <option value="Nas próximas semanas">Nas próximas semanas</option>
+              <option value="Ainda estou a planear">Ainda estou a planear</option>
+            </select>
+          </div>
+
+          <div class="form-row">
+            <label for="cf-orcamento">Orçamento aproximado</label>
+            <select id="cf-orcamento" name="orcamento_aproximado">
+              <option value="" disabled selected>Escolhe uma opção</option>
+              <option value="Até 500 €">Até 500 €</option>
+              <option value="500 a 1500 €">500 a 1500 €</option>
+              <option value="Mais de 1500 €">Mais de 1500 €</option>
+              <option value="Ainda não sei">Ainda não sei</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="form-row">
+          <label for="cf-mensagem">Mensagem</label>
+          <textarea id="cf-mensagem" name="mensagem" rows="5" required></textarea>
+        </div>
+
+        <button type="submit" class="btn btn-primary form-submit" id="contact-form-submit">Enviar</button>
+
+        <p class="form-status" id="contact-form-status" role="status" aria-live="polite" hidden></p>
+      </form>
+
+      <div class="contact-email-row">
+        <a href="mailto:work.hugotorres@gmail.com" class="btn btn-glass">Envia-me um email</a>
+        <button type="button" class="copy-email" id="copy-email" data-email="work.hugotorres@gmail.com" aria-live="polite">// copiar</button>
+      </div>
+      <div class="socials">
+        <a href="https://www.linkedin.com/in/hugotorres11/" class="social-link" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20.45 20.45h-3.55v-5.57c0-1.33-.02-3.03-1.85-3.03-1.85 0-2.14 1.45-2.14 2.94v5.66H9.36V9h3.41v1.56h.05c.48-.9 1.64-1.85 3.38-1.85 3.61 0 4.28 2.38 4.28 5.47v6.27zM5.34 7.43a2.06 2.06 0 1 1 0-4.12 2.06 2.06 0 0 1 0 4.12zM7.12 20.45H3.56V9h3.56v11.45z"/></svg>
+        </a>
+        <a href="https://www.instagram.com/hugotorres11_/" class="social-link" target="_blank" rel="noopener noreferrer" aria-label="Instagram">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2.16c3.2 0 3.58.01 4.85.07 1.17.05 1.8.24 2.22.4.56.22.96.48 1.38.9.42.42.68.82.9 1.38.16.42.35 1.05.4 2.22.06 1.27.07 1.65.07 4.85s-.01 3.58-.07 4.85c-.05 1.17-.24 1.8-.4 2.22-.22.56-.48.96-.9 1.38-.42.42-.82.68-1.38.9-.42.16-1.05.35-2.22.4-1.27.06-1.65.07-4.85.07s-3.58-.01-4.85-.07c-1.17-.05-1.8-.24-2.22-.4a3.72 3.72 0 0 1-1.38-.9 3.72 3.72 0 0 1-.9-1.38c-.16-.42-.35-1.05-.4-2.22-.06-1.27-.07-1.65-.07-4.85s.01-3.58.07-4.85c.05-1.17.24-1.8.4-2.22.22-.56.48-.96.9-1.38.42-.42.82-.68 1.38-.9.42-.16 1.05-.35 2.22-.4C8.42 2.17 8.8 2.16 12 2.16zm0 1.62c-3.15 0-3.5.01-4.73.07-1.03.05-1.6.22-1.97.36-.5.19-.85.42-1.22.79-.37.37-.6.72-.79 1.22-.14.37-.31.94-.36 1.97-.06 1.23-.07 1.58-.07 4.73s.01 3.5.07 4.73c.05 1.03.22 1.6.36 1.97.19.5.42.85.79 1.22.37.37.72.6 1.22.79.37.14.94.31 1.97.36 1.23.06 1.58.07 4.73.07s3.5-.01 4.73-.07c1.03-.05 1.6-.22 1.97-.36.5-.19.85-.42 1.22-.79.37-.37.6-.72.79-1.22.14-.37.31-.94.36-1.97.06-1.23.07-1.58.07-4.73s-.01-3.5-.07-4.73c-.05-1.03-.22-1.6-.36-1.97a3.28 3.28 0 0 0-.79-1.22 3.28 3.28 0 0 0-1.22-.79c-.37-.14-.94-.31-1.97-.36-1.23-.06-1.58-.07-4.73-.07zm0 4.14a5.08 5.08 0 1 1 0 10.16 5.08 5.08 0 0 1 0-10.16zm0 8.38a3.3 3.3 0 1 0 0-6.6 3.3 3.3 0 0 0 0 6.6zm6.47-8.58a1.19 1.19 0 1 1-2.38 0 1.19 1.19 0 0 1 2.38 0z"/></svg>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  </main>
+
+  <footer class="footer">
+    <div class="footer-row">
+      <p class="footer-copy">&copy; <span id="year"></span> Hugo Torres, design de marca e vídeo. Ponte de Lima e Porto. work.hugotorres@gmail.com</p>
+      <a href="index.html#home" class="footer-top">Voltar ao início ↑</a>
+    </div>
+  </footer>
+
+  </div>
+
+  <button type="button" class="back-to-top" id="back-to-top" aria-label="Voltar ao topo">
+    <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+      <path d="M12 19V5M12 5l-6 6M12 5l6 6" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+    </svg>
+  </button>
+
+  <script src="js/main.js"></script>
+</body>
+</html>

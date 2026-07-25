@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Projetos | Hugo Torres, design de marca e vídeo</title>
+<meta name="description" content="Três trabalhos, do rebranding completo à gestão de conteúdo mensal: identidade visual, marca e conteúdo para redes sociais. Ponte de Lima, Porto e remoto.">
+<meta name="theme-color" content="#0a0812">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Projetos | Hugo Torres, design de marca e vídeo">
+<meta property="og:description" content="Três trabalhos, do rebranding completo à gestão de conteúdo mensal: identidade visual, marca e conteúdo para redes sociais. Ponte de Lima, Porto e remoto.">
+<meta property="og:url" content="https://portefoliohugotorres.netlify.app/projetos.html">
+<meta property="og:image" content="assets/og-image.jpg">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Projetos | Hugo Torres, design de marca e vídeo">
+<meta name="twitter:description" content="Três trabalhos, do rebranding completo à gestão de conteúdo mensal: identidade visual, marca e conteúdo para redes sociais. Ponte de Lima, Porto e remoto.">
+<meta name="twitter:image" content="assets/og-image.jpg">
+<link rel="icon" type="image/jpeg" href="assets/favicon.jpg">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+  <!-- Fundo surrealista animado -->
+  <div class="bg-blobs">
+    <div class="blob-layer" data-depth="40"><div class="blob blob-1"></div></div>
+    <div class="blob-layer" data-depth="60"><div class="blob blob-2"></div></div>
+    <div class="blob-layer" data-depth="30"><div class="blob blob-3"></div></div>
+    <div class="blob-layer" data-depth="70"><div class="blob blob-4"></div></div>
+  </div>
+  <div class="noise-overlay"></div>
+
+  <!-- Blob que segue o cursor -->
+  <div class="cursor-glow" id="cursor-glow"></div>
+
+  <a href="#page-content" class="skip-link">Saltar para o conteúdo</a>
+
+  <div id="page-content" tabindex="-1">
+
+  <!-- Navegação -->
+  <header>
+    <nav class="glass nav">
+      <a href="index.html#home" class="nav-logo">O meu portefólio</a>
+      <div class="nav-links">
+        <a href="sobre.html">Sobre</a>
+        <a href="servicos.html">Serviços</a>
+        <a href="projetos.html" class="is-active">Projetos</a>
+        <a href="contacto.html">Contacto</a>
+      </div>
+    </nav>
+  </header>
+
+  <main>
+
+  <!-- Projetos -->
+  <section id="projetos" class="projects">
+    <p class="hero-note reveal">// projetos</p>
+    <h1 class="section-title reveal">Projetos</h1>
+    <p class="section-note reveal">Três trabalhos, do rebranding completo à gestão de conteúdo mensal. Em cada um explico o que estava em causa e as decisões que tomei.</p>
+    <div class="projects-grid" id="projects-grid">
+      <!-- Preenchido via JS a partir de data/projects.js -->
+    </div>
+  </section>
+
+  </main>
+
+  <footer class="footer">
+    <div class="footer-row">
+      <p class="footer-copy">&copy; <span id="year"></span> Hugo Torres, design de marca e vídeo. Ponte de Lima e Porto. work.hugotorres@gmail.com</p>
+      <a href="index.html#home" class="footer-top">Voltar ao início ↑</a>
+    </div>
+  </footer>
+
+  </div>
+
+  <button type="button" class="back-to-top" id="back-to-top" aria-label="Voltar ao topo">
+    <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+      <path d="M12 19V5M12 5l-6 6M12 5l6 6" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+    </svg>
+  </button>
+
+  <script src="data/projects.js"></script>
+  <script src="js/main.js"></script>
+</body>
+</html>
