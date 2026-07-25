@@ -13,6 +13,7 @@ const $$ = (sel, ctx = document) => [...ctx.querySelectorAll(sel)];
 // ---------- Glow que segue o cursor (rigorosamente, sem atraso) ----------
 (function cursorGlow() {
   if (prefersReducedMotion) return;
+  if (!window.matchMedia("(pointer: fine)").matches) return;
   const glow = $("#cursor-glow");
 
   window.addEventListener("pointermove", (e) => {
@@ -368,6 +369,7 @@ const $$ = (sel, ctx = document) => [...ctx.querySelectorAll(sel)];
 // ---------- Blur dinâmico ao fazer scroll (desfoca a subir, foca a descer) ----------
 (function scrollFocusBlur() {
   if (prefersReducedMotion) return;
+  if (!window.matchMedia("(pointer: fine)").matches) return;
   const target = $("#page-content");
   if (!target) return;
 

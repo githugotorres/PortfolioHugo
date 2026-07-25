@@ -192,6 +192,11 @@ body.tab-hidden .cursor-glow {
   animation-play-state: paused;
 }
 
+/* Sem rato não há cursor a seguir: poupa a animação de filter contínua (cara em Android). */
+@media (hover: none), (pointer: coarse) {
+  .cursor-glow { display: none; }
+}
+
 #page-content {
   position: relative;
   z-index: 1;
@@ -557,10 +562,8 @@ section {
   box-shadow: 0 8px 24px rgba(255, 95, 109, 0.28);
 }
 
-.btn-primary:hover {
-  transform: translateY(-2px) scale(1.03);
-  background-position: 100% 100%;
-  box-shadow: 0 14px 40px rgba(255, 95, 109, 0.5), 0 0 26px rgba(132, 94, 194, 0.35);
+.btn-primary:active {
+  transform: translateY(-1px) scale(1.01);
 }
 
 .btn-glass {
@@ -570,10 +573,24 @@ section {
   backdrop-filter: blur(12px);
 }
 
-.btn-glass:hover {
-  transform: translateY(-2px) scale(1.03);
-  background: rgba(255, 255, 255, 0.14);
-  box-shadow: 0 8px 28px rgba(132, 94, 194, 0.3);
+.btn-glass:active {
+  transform: translateY(-1px) scale(1.01);
+}
+
+/* Hover completo só com rato real: no toque, :active acima já dá o feedback,
+   sem deixar o botão "preso" em destaque depois de largar o dedo. */
+@media (hover: hover) and (pointer: fine) {
+  .btn-primary:hover {
+    transform: translateY(-2px) scale(1.03);
+    background-position: 100% 100%;
+    box-shadow: 0 14px 40px rgba(255, 95, 109, 0.5), 0 0 26px rgba(132, 94, 194, 0.35);
+  }
+
+  .btn-glass:hover {
+    transform: translateY(-2px) scale(1.03);
+    background: rgba(255, 255, 255, 0.14);
+    box-shadow: 0 8px 28px rgba(132, 94, 194, 0.3);
+  }
 }
 
 /* ---------- Panels ---------- */
@@ -672,10 +689,12 @@ section {
   transition: color 0.3s var(--ease), border-color 0.3s var(--ease), background 0.3s var(--ease);
 }
 
-.skill-badge:hover {
-  color: var(--ink);
-  border-color: var(--active-accent, var(--accent-3));
-  background: rgba(0, 201, 167, 0.1);
+@media (hover: hover) and (pointer: fine) {
+  .skill-badge:hover {
+    color: var(--ink);
+    border-color: var(--active-accent, var(--accent-3));
+    background: rgba(0, 201, 167, 0.1);
+  }
 }
 
 .about-photo {
@@ -722,14 +741,18 @@ section {
 /* Um só movimento — sobe, o vidro clareia ligeiramente, a sombra aprofunda-se.
    Sem tilt 3D, sem scale: o cursor só acende o spotlight (--mx/--my), o resto é CSS puro.
    Especificidade ".glass:hover" (não só ":hover") de propósito: precisa de ganhar a
-   ".reveal.is-visible" (mesma especificidade, mas vem depois no ficheiro). */
-.project-card.glass:hover {
-  transform: translateY(-8px);
-  background: rgba(255, 255, 255, 0.13);
-  border-color: rgba(255, 255, 255, 0.28);
-  backdrop-filter: blur(14px) saturate(140%);
-  -webkit-backdrop-filter: blur(14px) saturate(140%);
-  box-shadow: 0 24px 56px rgba(0, 0, 0, 0.38), inset 0 1px 0 rgba(255, 255, 255, 0.3);
+   ".reveal.is-visible" (mesma especificidade, mas vem depois no ficheiro).
+   Só em hover real: sem isto, o card fica "levantado" e desfocado depois de tocar
+   nele no Android (toque sintetiza :hover até se tocar noutro sítio). */
+@media (hover: hover) and (pointer: fine) {
+  .project-card.glass:hover {
+    transform: translateY(-8px);
+    background: rgba(255, 255, 255, 0.13);
+    border-color: rgba(255, 255, 255, 0.28);
+    backdrop-filter: blur(14px) saturate(140%);
+    -webkit-backdrop-filter: blur(14px) saturate(140%);
+    box-shadow: 0 24px 56px rgba(0, 0, 0, 0.38), inset 0 1px 0 rgba(255, 255, 255, 0.3);
+  }
 }
 
 .project-glow {
@@ -740,7 +763,9 @@ section {
   transition: opacity 0.8s var(--ease);
 }
 
-.project-card:hover .project-glow { opacity: 0.5; }
+@media (hover: hover) and (pointer: fine) {
+  .project-card:hover .project-glow { opacity: 0.5; }
+}
 
 /* Spotlight suave que segue o cursor dentro do card (--mx/--my escritos por rAF em main.js) */
 .project-spotlight {
@@ -752,8 +777,10 @@ section {
   pointer-events: none;
 }
 
-.project-card:hover .project-spotlight {
-  opacity: 1;
+@media (hover: hover) and (pointer: fine) {
+  .project-card:hover .project-spotlight {
+    opacity: 1;
+  }
 }
 
 .project-index {
@@ -1100,11 +1127,15 @@ section {
   fill: currentColor;
 }
 
-.social-link:hover {
-  color: var(--ink);
-  border-color: var(--active-accent, var(--accent-3));
-  background: rgba(0, 201, 167, 0.12);
-  transform: translateY(-3px);
+/* Só em hover real: sem isto, o ícone fica "preso" no estado ativo depois de tocar
+   no Android (abre link em nova aba e volta com o botão ainda destacado). */
+@media (hover: hover) and (pointer: fine) {
+  .social-link:hover {
+    color: var(--ink);
+    border-color: var(--active-accent, var(--accent-3));
+    background: rgba(0, 201, 167, 0.12);
+    transform: translateY(-3px);
+  }
 }
 
 .social-link:focus-visible {
@@ -1194,9 +1225,11 @@ section {
   transition: color 0.3s var(--ease), transform 0.3s var(--ease);
 }
 
-.footer-top:hover {
-  color: var(--ink);
-  transform: translateY(-2px);
+@media (hover: hover) and (pointer: fine) {
+  .footer-top:hover {
+    color: var(--ink);
+    transform: translateY(-2px);
+  }
 }
 
 /* ---------- Botão flutuante: voltar ao topo ---------- */
@@ -1237,15 +1270,24 @@ section {
   pointer-events: auto;
 }
 
-.back-to-top:hover,
 .back-to-top:focus-visible {
   color: var(--active-accent, var(--accent-3));
   border-color: var(--active-accent, var(--accent-3));
 }
 
-.back-to-top:hover svg,
 .back-to-top:focus-visible svg {
   transform: translateY(-3px);
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .back-to-top:hover {
+    color: var(--active-accent, var(--accent-3));
+    border-color: var(--active-accent, var(--accent-3));
+  }
+
+  .back-to-top:hover svg {
+    transform: translateY(-3px);
+  }
 }
 
 @media (prefers-reduced-motion: reduce) {
