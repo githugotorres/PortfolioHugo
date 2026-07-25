@@ -1183,9 +1183,11 @@ section {
   background: rgba(255, 255, 255, 0.1);
 }
 
-.form-row input:invalid:not(:placeholder-shown),
-.form-row select:invalid,
-.form-row textarea:invalid:not(:placeholder-shown) {
+/* :user-invalid só acende depois de o campo ser tocado (blur ou tentativa de submissão),
+   ao contrário de :invalid, que já pega em campos obrigatórios vazios na primeira renderização. */
+.form-row input:user-invalid,
+.form-row select:user-invalid,
+.form-row textarea:user-invalid {
   border-color: rgba(255, 95, 109, 0.6);
 }
 
