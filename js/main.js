@@ -518,5 +518,36 @@ const $$ = (sel, ctx = document) => [...ctx.querySelectorAll(sel)];
   }
 })();
 
+// ---------- Etiqueta do plano no card de projeto: leva ao plano certo, sem abrir o projeto ----------
+(function projectPlanLinks() {
+  const tags = $$(".project-tags[data-plano]");
+  if (!tags.length) return;
+
+  tags.forEach((tag) => {
+    tag.setAttribute("role", "button");
+    tag.setAttribute("tabindex", "0");
+
+    function trigger(e) {
+      e.preventDefault();
+      e.stopPropagation();
+      const target = document.getElementById(`plano-${tag.dataset.plano}`);
+      if (!target) return;
+
+      target.scrollIntoView({ behavior: prefersReducedMotion ? "auto" : "smooth", block: "center" });
+
+      target.classList.remove("is-highlighted");
+      void target.offsetWidth; // força reflow, para o pulso repetir mesmo que o plano já estivesse destacado
+      target.classList.add("is-highlighted");
+      clearTimeout(target._highlightTimer);
+      target._highlightTimer = setTimeout(() => target.classList.remove("is-highlighted"), 1600);
+    }
+
+    tag.addEventListener("click", trigger);
+    tag.addEventListener("keydown", (e) => {
+      if (e.key === "Enter" || e.key === " ") trigger(e);
+    });
+  });
+})();
+
 // ---------- Ano no footer ----------
 $("#year") && ($("#year").textContent = new Date().getFullYear());
