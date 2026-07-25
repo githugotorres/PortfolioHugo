@@ -26,7 +26,7 @@ const $$ = (sel, ctx = document) => [...ctx.querySelectorAll(sel)];
   const project = typeof PROJECTS !== "undefined" && PROJECTS[id - 1];
 
   if (!project) {
-    location.replace("index.html#projects");
+    location.replace("projetos.html");
     return;
   }
 
