@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://portefoliohugotorres.netlify.app/sitemap.xml
+Sitemap: https://githugotorres.github.io/PortfolioHugo/sitemap.xml
