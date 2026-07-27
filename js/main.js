@@ -3,7 +3,7 @@ const prefersReducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)
 const $ = (sel, ctx = document) => ctx.querySelector(sel);
 const $$ = (sel, ctx = document) => [...ctx.querySelectorAll(sel)];
 
-// ---------- Pausa as animações caras (blobs, glow) quando o separador não está visível ----------
+// ---------- Pausa as animações caras quando o separador não está visível ----------
 (function pauseWhenHidden() {
   const toggle = () => document.body.classList.toggle("tab-hidden", document.hidden);
   document.addEventListener("visibilitychange", toggle);
@@ -18,37 +18,6 @@ const $$ = (sel, ctx = document) => [...ctx.querySelectorAll(sel)];
 
   window.addEventListener("pointermove", (e) => {
     glow.style.transform = `translate(${e.clientX}px, ${e.clientY}px) translate(-50%, -50%)`;
-  });
-})();
-
-// ---------- Paralaxe subtil do fundo baseado no rato ----------
-(function bgParallax() {
-  if (prefersReducedMotion) return;
-  if (!window.matchMedia("(pointer: fine)").matches) return;
-  const layers = $$(".blob-layer");
-  if (!layers.length) return;
-
-  layers.forEach((layer) => layer.classList.add("is-tracking"));
-
-  let ticking = false;
-  let lastEvent = null;
-
-  function apply() {
-    const nx = lastEvent.clientX / window.innerWidth - 0.5;
-    const ny = lastEvent.clientY / window.innerHeight - 0.5;
-    layers.forEach((layer) => {
-      const depth = Number(layer.dataset.depth) || 40;
-      layer.style.transform = `translate(${nx * depth}px, ${ny * depth}px)`;
-    });
-    ticking = false;
-  }
-
-  window.addEventListener("pointermove", (e) => {
-    lastEvent = e;
-    if (!ticking) {
-      requestAnimationFrame(apply);
-      ticking = true;
-    }
   });
 })();
 

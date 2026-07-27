@@ -1,8 +1,11 @@
 /* ---------- Base & tokens ---------- */
 :root {
-  --bg: #0e0b16;
-  --ink: #f4f1fa;
-  --ink-dim: rgba(244, 241, 250, 0.65);
+  --bg: #060607;
+  --bg-raise: #0d0d10;
+  --ink: #f2f2f4;
+  --ink-dim: rgba(242, 242, 244, 0.58);
+  --line: rgba(255, 255, 255, 0.10);
+  --line-bright: rgba(255, 255, 255, 0.28);
   --accent-1: #ff5f6d;
   --accent-2: #845ec2;
   --accent-3: #00c9a7;
@@ -78,81 +81,14 @@ button:focus-visible {
   .hg-letter { transform: none !important; }
 }
 
-/* ---------- Surreal animated background ---------- */
-.bg-blobs {
+/* ---------- Preto lacado ---------- */
+.bg-lacquer {
   position: fixed;
   inset: 0;
   z-index: -2;
-  overflow: hidden;
-}
-
-.blob-layer {
-  position: absolute;
-  inset: 0;
-  will-change: transform;
-  transition: transform 0.6s var(--ease);
-}
-
-/* Uma vez que o parallax está ativo (rato fino), o transform é escrito a cada frame —
-   a transição só o faria ficar sempre "atrás" do rato, como já corrigimos nos botões. */
-.blob-layer.is-tracking {
-  transition-property: none;
-}
-
-.blob {
-  position: absolute;
-  width: 42vmax;
-  height: 42vmax;
-  border-radius: 50%;
-  filter: blur(56px);
-  opacity: 0.5;
-  will-change: transform;
-  transform: translateZ(0);
-}
-
-.blob-1 {
-  top: -15%;
-  left: -10%;
-  background: var(--accent-1);
-  animation: drift1 26s ease-in-out infinite;
-}
-
-.blob-2 {
-  top: 20%;
-  right: -15%;
-  background: var(--accent-2);
-  animation: drift2 32s ease-in-out infinite;
-}
-
-.blob-3 {
-  bottom: -20%;
-  left: 15%;
-  background: var(--accent-3);
-  animation: drift3 30s ease-in-out infinite;
-}
-
-.blob-4 {
-  bottom: -10%;
-  right: 5%;
-  width: 30vmax;
-  height: 30vmax;
-  background: var(--accent-4);
-  animation: drift1 24s ease-in-out infinite reverse;
-}
-
-@keyframes drift1 {
-  0%, 100% { transform: translate(0, 0) scale(1); }
-  50% { transform: translate(6vw, 8vh) scale(1.12); }
-}
-
-@keyframes drift2 {
-  0%, 100% { transform: translate(0, 0) scale(1); }
-  50% { transform: translate(-8vw, 6vh) scale(0.92); }
-}
-
-@keyframes drift3 {
-  0%, 100% { transform: translate(0, 0) scale(1); }
-  50% { transform: translate(5vw, -7vh) scale(1.08); }
+  background:
+    radial-gradient(ellipse 1600px 900px at 50% -12%, rgba(255, 255, 255, 0.04), transparent 60%),
+    linear-gradient(180deg, #060607 0%, #0a0a0d 100%);
 }
 
 .noise-overlay {
@@ -160,7 +96,7 @@ button:focus-visible {
   inset: 0;
   z-index: -1;
   pointer-events: none;
-  opacity: 0.035;
+  opacity: 0.0175;
   mix-blend-mode: overlay;
   background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
 }
@@ -175,22 +111,9 @@ button:focus-visible {
   pointer-events: none;
   z-index: 0;
   mix-blend-mode: screen;
-  background: radial-gradient(circle, rgba(255, 95, 109, 0.38), rgba(132, 94, 194, 0.22) 45%, transparent 72%);
+  background: radial-gradient(circle, rgba(255, 255, 255, 0.10), rgba(255, 255, 255, 0.03) 45%, transparent 72%);
   transform: translate(-50%, -50%);
-  will-change: transform, filter;
-  animation: glow-hue 14s linear infinite;
-}
-
-@keyframes glow-hue {
-  0% { filter: hue-rotate(0deg) saturate(160%); }
-  100% { filter: hue-rotate(360deg) saturate(160%); }
-}
-
-/* Separador em segundo plano: pausa as animações mais caras (blur grande + filter contínuo).
-   Ninguém as vê nesse estado, por isso é ganho puro — zero custo visual. */
-body.tab-hidden .blob,
-body.tab-hidden .cursor-glow {
-  animation-play-state: paused;
+  will-change: transform;
 }
 
 /* Sem rato não há cursor a seguir: poupa a animação de filter contínua (cara em Android). */
@@ -769,8 +692,8 @@ h1.section-title {
   flex-direction: column;
   min-height: 240px;
   /* Sem backdrop-filter em repouso: com vários cards na grelha ao mesmo tempo, ter os 4
-     sempre a desfocar o fundo é caro para nada (o fundo já está desfocado pelos blobs).
-     Só entra no hover, onde custa uma vez em vez de sempre. */
+     sempre a desfocar o fundo é caro para nada. Só entra no hover, onde custa uma vez em
+     vez de sempre. */
   backdrop-filter: none;
   -webkit-backdrop-filter: none;
   transition: transform 0.9s var(--ease), box-shadow 0.9s var(--ease), background 0.9s var(--ease), border-color 0.9s var(--ease), backdrop-filter 0.9s var(--ease);
@@ -1739,10 +1662,6 @@ h1.section-title {
   .nav-links { gap: 0.45rem; flex-shrink: 0; }
   .nav-links a { font-size: 0.66rem; white-space: nowrap; }
   section { padding: 6rem 1.25rem; }
-
-  /* Otimização de performance: menos blur e uma camada a menos animada */
-  .blob { filter: blur(40px); }
-  .blob-4 { display: none; }
 
   /* Hero: colapsa a hierarquia editorial para leitura vertical simples */
   .hero { padding: 6.5rem 1.25rem 3.5rem; }
