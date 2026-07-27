@@ -3,7 +3,12 @@ const prefersReducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)
 const $ = (sel, ctx = document) => ctx.querySelector(sel);
 const $$ = (sel, ctx = document) => [...ctx.querySelectorAll(sel)];
 
-// ---------- Pausa as animações caras (blobs, glow) quando o separador não está visível ----------
+// Dispositivos com poucos núcleos: menos animação contínua em ecrã (ver css .low-power)
+if (navigator.hardwareConcurrency && navigator.hardwareConcurrency < 4) {
+  document.documentElement.classList.add("low-power");
+}
+
+// ---------- Pausa as animações caras quando o separador não está visível ----------
 (function pauseWhenHidden() {
   const toggle = () => document.body.classList.toggle("tab-hidden", document.hidden);
   document.addEventListener("visibilitychange", toggle);
@@ -18,37 +23,6 @@ const $$ = (sel, ctx = document) => [...ctx.querySelectorAll(sel)];
 
   window.addEventListener("pointermove", (e) => {
     glow.style.transform = `translate(${e.clientX}px, ${e.clientY}px) translate(-50%, -50%)`;
-  });
-})();
-
-// ---------- Paralaxe subtil do fundo baseado no rato ----------
-(function bgParallax() {
-  if (prefersReducedMotion) return;
-  if (!window.matchMedia("(pointer: fine)").matches) return;
-  const layers = $$(".blob-layer");
-  if (!layers.length) return;
-
-  layers.forEach((layer) => layer.classList.add("is-tracking"));
-
-  let ticking = false;
-  let lastEvent = null;
-
-  function apply() {
-    const nx = lastEvent.clientX / window.innerWidth - 0.5;
-    const ny = lastEvent.clientY / window.innerHeight - 0.5;
-    layers.forEach((layer) => {
-      const depth = Number(layer.dataset.depth) || 40;
-      layer.style.transform = `translate(${nx * depth}px, ${ny * depth}px)`;
-    });
-    ticking = false;
-  }
-
-  window.addEventListener("pointermove", (e) => {
-    lastEvent = e;
-    if (!ticking) {
-      requestAnimationFrame(apply);
-      ticking = true;
-    }
   });
 })();
 
@@ -171,83 +145,28 @@ const $$ = (sel, ctx = document) => [...ctx.querySelectorAll(sel)];
   });
 })();
 
-// ---------- Linhas de labirinto sincronizadas com o scroll ----------
-(function scrollMaze() {
-  const mazes = $$(".maze");
-  if (!mazes.length) return;
-
-  const SVG_NS = "http://www.w3.org/2000/svg";
-  const state = mazes.map((svg, i) => {
-    const path = document.createElementNS(SVG_NS, "path");
-    path.setAttribute("class", "maze-path");
-    svg.appendChild(path);
-
-    const cursor = document.createElementNS(SVG_NS, "circle");
-    cursor.setAttribute("class", "maze-cursor");
-    cursor.setAttribute("r", "3");
-    svg.appendChild(cursor);
-
-    return { svg, path, cursor, mirrored: i === 1, len: 0 };
-  });
-
-  function buildPathD(height, mirrored) {
-    const left = 10;
-    const right = 30;
-    const step = 90;
-    let y = 0;
-    let atRight = mirrored;
-    let d = `M ${atRight ? right : left} 0`;
-    while (y < height) {
-      const next = Math.min(y + step, height);
-      d += ` V ${next}`;
-      y = next;
-      if (y >= height) break;
-      atRight = !atRight;
-      d += ` H ${atRight ? right : left}`;
-    }
-    return d;
-  }
-
-  function measure() {
-    const h = window.innerHeight;
-    state.forEach((s) => {
-      s.svg.setAttribute("viewBox", `0 0 40 ${h}`);
-      s.svg.setAttribute("preserveAspectRatio", "none");
-      s.path.setAttribute("d", buildPathD(h, s.mirrored));
-      const len = s.path.getTotalLength();
-      s.len = len;
-      s.path.style.strokeDasharray = String(len);
-      s.path.style.strokeDashoffset = String(prefersReducedMotion ? 0 : len);
-    });
-  }
-  measure();
-
-  let resizeTimer;
-  window.addEventListener("resize", () => {
-    clearTimeout(resizeTimer);
-    resizeTimer = setTimeout(measure, 150);
-  });
-
-  const progressEl = $("#scroll-progress");
+// ---------- Barra de progresso do scroll + respiração da grelha ----------
+(function scrollProgress() {
+  const fill = $("#scroll-progress-fill");
+  const gridLines = $(".grid-lines");
+  if (!fill && !gridLines) return;
 
   function updateProgress() {
     const max = document.documentElement.scrollHeight - window.innerHeight;
     const progress = max > 0 ? Math.min(1, Math.max(0, window.scrollY / max)) : 0;
-
-    state.forEach((s) => {
-      if (!prefersReducedMotion) {
-        s.path.style.strokeDashoffset = String(s.len * (1 - progress));
-      }
-      const pt = s.path.getPointAtLength(s.len * progress);
-      s.cursor.setAttribute("cx", String(pt.x));
-      s.cursor.setAttribute("cy", String(pt.y));
-    });
-
-    if (progressEl) {
-      progressEl.textContent = `// ${String(Math.round(progress * 100)).padStart(2, "0")}%`;
-    }
+    if (fill) fill.style.transform = `scaleX(${progress})`;
   }
   updateProgress();
+
+  let scrollingTimer;
+  function onScroll() {
+    updateProgress();
+    if (gridLines && !prefersReducedMotion) {
+      gridLines.classList.add("is-scrolling");
+      clearTimeout(scrollingTimer);
+      scrollingTimer = setTimeout(() => gridLines.classList.remove("is-scrolling"), 300);
+    }
+  }
 
   let ticking = false;
   window.addEventListener(
@@ -255,7 +174,7 @@ const $$ = (sel, ctx = document) => [...ctx.querySelectorAll(sel)];
     () => {
       if (!ticking) {
         requestAnimationFrame(() => {
-          updateProgress();
+          onScroll();
           ticking = false;
         });
         ticking = true;
@@ -263,6 +182,42 @@ const $$ = (sel, ctx = document) => [...ctx.querySelectorAll(sel)];
     },
     { passive: true }
   );
+})();
+
+// ---------- Traço superior das secções: desenha-se ao entrar no ecrã ----------
+(function sectionEdges() {
+  const sections = $$("main > section");
+  if (!sections.length) return;
+  if (!("IntersectionObserver" in window) || prefersReducedMotion) {
+    sections.forEach((el) => el.classList.add("is-inview"));
+    return;
+  }
+
+  const io = new IntersectionObserver(
+    (entries) => {
+      entries.forEach((entry) => {
+        entry.target.classList.toggle("is-inview", entry.isIntersecting);
+      });
+    },
+    { threshold: 0.15 }
+  );
+  sections.forEach((el) => io.observe(el));
+})();
+
+// ---------- Pausa o reflexo especular dos cards fora do ecrã ----------
+(function pauseSweepOffscreen() {
+  const cards = $$(".project-card, .pricing-card");
+  if (!cards.length || !("IntersectionObserver" in window)) return;
+
+  const io = new IntersectionObserver(
+    (entries) => {
+      entries.forEach((entry) => {
+        entry.target.classList.toggle("sweep-paused", !entry.isIntersecting);
+      });
+    },
+    { threshold: 0 }
+  );
+  cards.forEach((el) => io.observe(el));
 })();
 
 // ---------- Navbar mais opaca/vidro ao fazer scroll ----------
