@@ -7,10 +7,7 @@
   --line: rgba(255, 255, 255, 0.10);
   --line-breathe: rgba(255, 255, 255, 0.16);
   --line-bright: rgba(255, 255, 255, 0.28);
-  --accent-1: #ff5f6d;
-  --accent-2: #845ec2;
-  --accent-3: #00c9a7;
-  --accent-4: #ffc75f;
+  --accent-3: #b8bec7;
   --glass-bg: rgba(255, 255, 255, 0.1);
   --glass-border: rgba(255, 255, 255, 0.2);
   --glass-highlight: rgba(255, 255, 255, 0.35);
@@ -361,7 +358,7 @@ main > section.is-inview::before {
 .hero-name:hover .hg-letter {
   color: color-mix(in oklab, var(--ink), var(--accent-3) calc((1 - var(--d, 1)) * 100%));
   font-weight: calc(900 - var(--d, 1) * 150);
-  text-shadow: 0 0 calc(14px * (1 - var(--d, 1))) rgba(0, 201, 167, calc((1 - var(--d, 1)) * 0.5));
+  text-shadow: 0 0 calc(14px * (1 - var(--d, 1))) rgba(184, 190, 199, calc((1 - var(--d, 1)) * 0.5));
   transform: translateY(calc((1 - var(--d, 1)) * -0.03em));
   transition: color 0.12s linear, text-shadow 0.12s linear, font-weight 0.12s linear, transform 0.12s linear;
 }
@@ -371,7 +368,7 @@ main > section.is-inview::before {
 .hero-name:focus-visible .hg-letter {
   color: var(--accent-3);
   font-weight: 850;
-  text-shadow: 0 0 16px rgba(0, 201, 167, 0.5);
+  text-shadow: 0 0 16px rgba(184, 190, 199, 0.5);
   transform: translateY(-0.03em);
 }
 
@@ -614,7 +611,7 @@ html.low-power .project-card:nth-of-type(3)::after, html.low-power .pricing-card
   background: var(--active-accent, var(--accent-3));
   color: var(--bg);
   font-weight: 500;
-  box-shadow: 0 8px 24px rgba(0, 201, 167, 0.28);
+  box-shadow: 0 8px 24px rgba(184, 190, 199, 0.28);
 }
 
 .btn-primary:active {
@@ -637,7 +634,7 @@ html.low-power .project-card:nth-of-type(3)::after, html.low-power .pricing-card
 @media (hover: hover) and (pointer: fine) {
   .btn-primary:hover {
     transform: translateY(-2px) scale(1.03);
-    box-shadow: 0 14px 40px rgba(0, 201, 167, 0.45);
+    box-shadow: 0 14px 40px rgba(184, 190, 199, 0.45);
   }
 
   .btn-glass:hover {
@@ -769,7 +766,7 @@ h1.section-title {
   .skill-badge:hover {
     color: var(--ink);
     border-color: var(--active-accent, var(--accent-3));
-    background: rgba(0, 201, 167, 0.1);
+    background: rgba(184, 190, 199, 0.1);
   }
 }
 
@@ -887,7 +884,7 @@ h1.section-title {
 .project-card:hover .project-tags span,
 .project-page-panel .project-tags span:hover {
   color: var(--ink);
-  background: rgba(0, 201, 167, 0.14);
+  background: rgba(184, 190, 199, 0.14);
 }
 
 /* Etiqueta com plano associado: é o único pedaço do card que não navega para o
@@ -903,9 +900,9 @@ h1.section-title {
   display: inline-flex;
   align-items: center;
   gap: 0.35rem;
-  background: rgba(0, 201, 167, 0.16);
+  background: rgba(184, 190, 199, 0.16);
   color: var(--ink);
-  border: 1px solid rgba(0, 201, 167, 0.45);
+  border: 1px solid rgba(184, 190, 199, 0.45);
   font-weight: 500;
 }
 
@@ -917,8 +914,8 @@ h1.section-title {
 .project-tags[data-plano]:hover span,
 .project-tags[data-plano]:focus-visible span {
   color: var(--ink);
-  background: rgba(0, 201, 167, 0.32);
-  border-color: rgba(0, 201, 167, 0.7);
+  background: rgba(184, 190, 199, 0.32);
+  border-color: rgba(184, 190, 199, 0.7);
 }
 
 .project-tags[data-plano]:hover span::after,
@@ -1191,7 +1188,7 @@ h1.section-title {
 .lightbox-close:hover,
 .lightbox-nav:hover {
   background: rgba(255, 255, 255, 0.16);
-  border-color: rgba(0, 201, 167, 0.4);
+  border-color: rgba(184, 190, 199, 0.4);
 }
 
 .lightbox-close {
@@ -1334,8 +1331,8 @@ h1.section-title {
 }
 
 .form-status.is-success {
-  background: rgba(0, 201, 167, 0.12);
-  border: 1px solid rgba(0, 201, 167, 0.4);
+  background: rgba(184, 190, 199, 0.12);
+  border: 1px solid rgba(184, 190, 199, 0.4);
 }
 
 .form-status.is-error {
@@ -1396,7 +1393,7 @@ h1.section-title {
   .social-link:hover {
     color: var(--ink);
     border-color: var(--active-accent, var(--accent-3));
-    background: rgba(0, 201, 167, 0.12);
+    background: rgba(184, 190, 199, 0.12);
     transform: translateY(-3px);
   }
 }
@@ -1430,7 +1427,7 @@ h1.section-title {
     position: absolute;
     inset: 0;
     border-radius: 50%;
-    background: linear-gradient(180deg, transparent, rgba(0, 201, 167, 0.4), transparent);
+    background: linear-gradient(180deg, transparent, rgba(184, 190, 199, 0.4), transparent);
     opacity: 0;
     transform: translateY(-100%);
     pointer-events: none;
@@ -1595,15 +1592,15 @@ h1.section-title {
 
 .pricing-card--featured {
   border-color: var(--active-accent, var(--accent-3));
-  box-shadow: 0 20px 48px rgba(0, 201, 167, 0.18), inset 0 1px 0 var(--glass-highlight);
+  box-shadow: 0 20px 48px rgba(184, 190, 199, 0.18), inset 0 1px 0 var(--glass-highlight);
 }
 
 /* Pulso ao chegar a este plano vindo da etiqueta de um projeto. Usa outline e um scale
    muito leve, sem mexer no box-shadow, para não entrar em conflito com o do featured. */
 @keyframes plan-highlight-pulse {
-  0% { outline: 2px solid rgba(0, 201, 167, 0); outline-offset: 0; transform: scale(1); }
-  25% { outline: 2px solid rgba(0, 201, 167, 0.8); outline-offset: 6px; transform: scale(1.015); }
-  100% { outline: 2px solid rgba(0, 201, 167, 0); outline-offset: 10px; transform: scale(1); }
+  0% { outline: 2px solid rgba(184, 190, 199, 0); outline-offset: 0; transform: scale(1); }
+  25% { outline: 2px solid rgba(184, 190, 199, 0.8); outline-offset: 6px; transform: scale(1.015); }
+  100% { outline: 2px solid rgba(184, 190, 199, 0); outline-offset: 10px; transform: scale(1); }
 }
 
 .pricing-card.is-highlighted {
