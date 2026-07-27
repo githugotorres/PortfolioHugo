@@ -571,27 +571,9 @@ main > section.is-inview::before {
   }
 }
 
-/* Títulos grandes: versão mais contida e mais lenta */
-h1.section-title {
-  position: relative;
-  overflow: hidden;
-}
-
-h1.section-title::after {
-  content: "";
-  position: absolute;
-  inset: 0;
-  background: linear-gradient(105deg, transparent 35%, rgba(255, 255, 255, 0.05) 50%, transparent 65%);
-  transform: translateX(-120%);
-  pointer-events: none;
-  will-change: transform;
-  animation: specular-sweep 14s ease-in-out infinite;
-}
-
 @media (prefers-reduced-motion: reduce) {
   .project-card::after,
-  .pricing-card::after,
-  h1.section-title::after {
+  .pricing-card::after {
     animation: none;
   }
 }
