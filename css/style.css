@@ -516,6 +516,86 @@ main > section.is-inview::before {
   will-change: transform;
 }
 
+/* ---------- Reflexo especular ---------- */
+/* Faixa de luz que atravessa o elemento por transform (nunca background-position). */
+@keyframes specular-sweep {
+  0% { transform: translateX(-120%); }
+  14% { transform: translateX(120%); }
+  100% { transform: translateX(120%); }
+}
+
+@keyframes specular-sweep-once {
+  from { transform: translateX(-120%); }
+  to { transform: translateX(120%); }
+}
+
+.project-card::after,
+.pricing-card::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(105deg, transparent 35%, rgba(255, 255, 255, 0.08) 50%, transparent 65%);
+  transform: translateX(-120%);
+  pointer-events: none;
+  will-change: transform;
+  animation: specular-sweep 8s ease-in-out infinite;
+}
+
+.project-card:nth-of-type(1)::after, .pricing-card:nth-of-type(1)::after { animation-duration: 7s; animation-delay: 0s; }
+.project-card:nth-of-type(2)::after, .pricing-card:nth-of-type(2)::after { animation-duration: 8s; animation-delay: 1.3s; }
+.project-card:nth-of-type(3)::after, .pricing-card:nth-of-type(3)::after { animation-duration: 9s; animation-delay: 2.6s; }
+
+.pricing-card { position: relative; overflow: hidden; }
+
+/* Botões: só ao passar o rato, um único trajeto (não é ambiente contínuo) */
+.btn-block,
+.btn {
+  overflow: hidden;
+}
+
+.btn-block::after,
+.btn::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  background: linear-gradient(105deg, transparent 35%, rgba(255, 255, 255, 0.08) 50%, transparent 65%);
+  transform: translateX(-120%);
+  pointer-events: none;
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .btn-block:hover::after,
+  .btn:hover::after {
+    animation: specular-sweep-once 0.9s var(--ease);
+  }
+}
+
+/* Títulos grandes: versão mais contida e mais lenta */
+h1.section-title {
+  position: relative;
+  overflow: hidden;
+}
+
+h1.section-title::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(105deg, transparent 35%, rgba(255, 255, 255, 0.05) 50%, transparent 65%);
+  transform: translateX(-120%);
+  pointer-events: none;
+  will-change: transform;
+  animation: specular-sweep 14s ease-in-out infinite;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .project-card::after,
+  .pricing-card::after,
+  h1.section-title::after {
+    animation: none;
+  }
+}
+
 /* ---------- Buttons ---------- */
 .btn {
   display: inline-flex;
