@@ -3,6 +3,11 @@ const prefersReducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)
 const $ = (sel, ctx = document) => ctx.querySelector(sel);
 const $$ = (sel, ctx = document) => [...ctx.querySelectorAll(sel)];
 
+// Dispositivos com poucos núcleos: menos animação contínua em ecrã (ver css .low-power)
+if (navigator.hardwareConcurrency && navigator.hardwareConcurrency < 4) {
+  document.documentElement.classList.add("low-power");
+}
+
 // ---------- Pausa as animações caras quando o separador não está visível ----------
 (function pauseWhenHidden() {
   const toggle = () => document.body.classList.toggle("tab-hidden", document.hidden);
@@ -197,6 +202,22 @@ const $$ = (sel, ctx = document) => [...ctx.querySelectorAll(sel)];
     { threshold: 0.15 }
   );
   sections.forEach((el) => io.observe(el));
+})();
+
+// ---------- Pausa o reflexo especular dos cards fora do ecrã ----------
+(function pauseSweepOffscreen() {
+  const cards = $$(".project-card, .pricing-card");
+  if (!cards.length || !("IntersectionObserver" in window)) return;
+
+  const io = new IntersectionObserver(
+    (entries) => {
+      entries.forEach((entry) => {
+        entry.target.classList.toggle("sweep-paused", !entry.isIntersecting);
+      });
+    },
+    { threshold: 0 }
+  );
+  cards.forEach((el) => io.observe(el));
 })();
 
 // ---------- Navbar mais opaca/vidro ao fazer scroll ----------

@@ -483,16 +483,18 @@ main > section.is-inview::before {
   top: 0;
   bottom: 0;
   width: 1px;
-  background: var(--line);
-  transition: background 0.6s var(--ease);
+  background: var(--line-breathe);
+  opacity: 0.625;
+  transition: opacity 0.6s var(--ease);
 }
 
 .grid-line--left { left: clamp(12px, 4vw, 32px); }
 .grid-line--right { right: clamp(12px, 4vw, 32px); }
 
-/* Respiração: a grelha ganha +6% de opacidade enquanto há scroll ativo */
+/* Respiração: a grelha ganha +6% de opacidade enquanto há scroll ativo.
+   Só opacity anima (nunca background), para ficar leve para o compositor. */
 .grid-lines.is-scrolling .grid-line {
-  background: var(--line-breathe);
+  opacity: 1;
 }
 
 /* ---------- Barra de progresso do scroll ---------- */
@@ -544,6 +546,23 @@ main > section.is-inview::before {
 .project-card:nth-of-type(1)::after, .pricing-card:nth-of-type(1)::after { animation-duration: 7s; animation-delay: 0s; }
 .project-card:nth-of-type(2)::after, .pricing-card:nth-of-type(2)::after { animation-duration: 8s; animation-delay: 1.3s; }
 .project-card:nth-of-type(3)::after, .pricing-card:nth-of-type(3)::after { animation-duration: 9s; animation-delay: 2.6s; }
+
+/* Nada anima fora do ecrã: pausado por IntersectionObserver (main.js) */
+.project-card.sweep-paused::after,
+.pricing-card.sweep-paused::after {
+  animation-play-state: paused;
+}
+
+/* Ecrãs pequenos ou dispositivos com poucos núcleos: metade da frequência do reflexo */
+@media (max-width: 767px) {
+  .project-card:nth-of-type(1)::after, .pricing-card:nth-of-type(1)::after { animation-duration: 14s; }
+  .project-card:nth-of-type(2)::after, .pricing-card:nth-of-type(2)::after { animation-duration: 16s; }
+  .project-card:nth-of-type(3)::after, .pricing-card:nth-of-type(3)::after { animation-duration: 18s; }
+}
+
+html.low-power .project-card:nth-of-type(1)::after, html.low-power .pricing-card:nth-of-type(1)::after { animation-duration: 14s; }
+html.low-power .project-card:nth-of-type(2)::after, html.low-power .pricing-card:nth-of-type(2)::after { animation-duration: 16s; }
+html.low-power .project-card:nth-of-type(3)::after, html.low-power .pricing-card:nth-of-type(3)::after { animation-duration: 18s; }
 
 .pricing-card { position: relative; overflow: hidden; }
 
