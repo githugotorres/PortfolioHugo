@@ -79,9 +79,14 @@
   <!-- Glow que segue o cursor -->
   <div class="cursor-glow" id="cursor-glow"></div>
 
-  <!-- Linhas de labirinto sincronizadas com o scroll -->
-  <svg class="maze maze--left" aria-hidden="true" focusable="false"></svg>
-  <svg class="maze maze--right" aria-hidden="true" focusable="false"></svg>
+  <!-- Linhas de grelha verticais -->
+  <div class="grid-lines" aria-hidden="true">
+    <span class="grid-line grid-line--left"></span>
+    <span class="grid-line grid-line--right"></span>
+  </div>
+
+  <!-- Barra de progresso do scroll -->
+  <div class="scroll-progress-bar" aria-hidden="true"><span class="scroll-progress-fill" id="scroll-progress-fill"></span></div>
 
   <a href="#page-content" class="skip-link">Saltar para o conteúdo</a>
 
@@ -120,7 +125,7 @@
       <a href="servicos.html" class="btn-block glass btn-block--outline">Pedir orçamento</a>
     </div>
 
-    <p class="scroll-status reveal" style="transition-delay: 360ms;">Scroll <span id="scroll-progress">// 00%</span></p>
+    <p class="scroll-status reveal" style="transition-delay: 360ms;">Scroll <span aria-hidden="true">&darr;</span></p>
   </section>
 
   <!-- Trabalhos -->
