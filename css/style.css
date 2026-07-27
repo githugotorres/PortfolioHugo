@@ -58,7 +58,7 @@ button:focus-visible {
   padding: 0.75rem 1.25rem;
   background: var(--ink);
   color: #0a0812;
-  font-weight: 500;
+  font-weight: 400;
   text-decoration: none;
   border-radius: 8px;
   transition: top 0.3s var(--ease);
@@ -380,7 +380,7 @@ main > section.is-inview::before {
   margin: 1.5rem 0 0.6rem 0.2em;
   color: var(--ink-dim);
   font-size: 0.98rem;
-  font-weight: 500;
+  font-weight: 400;
   line-height: 1.55;
 }
 
@@ -412,7 +412,7 @@ main > section.is-inview::before {
   align-items: center;
   padding: 0.85rem 1.75rem;
   font-size: 0.95rem;
-  font-weight: 500;
+  font-weight: 400;
   text-decoration: none;
   color: var(--ink);
   transition:
@@ -603,14 +603,14 @@ html.low-power .project-card:nth-of-type(3)::after, html.low-power .pricing-card
   border-radius: 999px;
   text-decoration: none;
   font-size: 0.95rem;
-  font-weight: 500;
+  font-weight: 400;
   transition: transform 0.35s var(--ease), box-shadow 0.35s var(--ease), background 0.35s var(--ease);
 }
 
 .btn-primary {
   background: var(--active-accent, var(--accent-3));
   color: var(--bg);
-  font-weight: 500;
+  font-weight: 400;
   box-shadow: 0 8px 24px rgba(184, 190, 199, 0.28);
 }
 
@@ -903,7 +903,7 @@ h1.section-title {
   background: rgba(184, 190, 199, 0.16);
   color: var(--ink);
   border: 1px solid rgba(184, 190, 199, 0.45);
-  font-weight: 500;
+  font-weight: 400;
 }
 
 .project-tags[data-plano] span::after {
@@ -931,7 +931,7 @@ h1.section-title {
 
 .project-title {
   font-size: 1.3rem;
-  font-weight: 500;
+  font-weight: 400;
   margin: 1.25rem 0 0.85rem;
   letter-spacing: -0.01em;
 }
@@ -1242,7 +1242,7 @@ h1.section-title {
   font-size: 0.85rem;
 }
 
-.testimonial-name { color: var(--ink); font-weight: 500; }
+.testimonial-name { color: var(--ink); font-weight: 400; }
 .testimonial-role { color: var(--ink-dim); }
 
 /* ---------- Contact ---------- */
@@ -1595,16 +1595,35 @@ h1.section-title {
   box-shadow: 0 20px 48px rgba(184, 190, 199, 0.18), inset 0 1px 0 var(--glass-highlight);
 }
 
-/* Pulso ao chegar a este plano vindo da etiqueta de um projeto. Usa outline e um scale
-   muito leve, sem mexer no box-shadow, para não entrar em conflito com o do featured. */
+/* Pulso ao chegar a este plano vindo da etiqueta de um projeto. Só transform/opacity:
+   o anel é um elemento próprio (não outline), para não fugir à regra de movimento. */
+.pricing-pulse-ring {
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  border: 2px solid var(--active-accent, var(--accent-3));
+  opacity: 0;
+  pointer-events: none;
+}
+
+@keyframes plan-highlight-pulse-ring {
+  0% { opacity: 0; }
+  25% { opacity: 0.9; }
+  100% { opacity: 0; }
+}
+
 @keyframes plan-highlight-pulse {
-  0% { outline: 2px solid rgba(184, 190, 199, 0); outline-offset: 0; transform: scale(1); }
-  25% { outline: 2px solid rgba(184, 190, 199, 0.8); outline-offset: 6px; transform: scale(1.015); }
-  100% { outline: 2px solid rgba(184, 190, 199, 0); outline-offset: 10px; transform: scale(1); }
+  0% { transform: scale(1); }
+  25% { transform: scale(1.015); }
+  100% { transform: scale(1); }
 }
 
 .pricing-card.is-highlighted {
   animation: plan-highlight-pulse 1.4s var(--ease);
+}
+
+.pricing-card.is-highlighted .pricing-pulse-ring {
+  animation: plan-highlight-pulse-ring 1.4s var(--ease);
 }
 
 .pricing-badge {
@@ -1728,7 +1747,7 @@ h1.section-title {
 
 .faq-item summary {
   cursor: pointer;
-  font-weight: 500;
+  font-weight: 400;
   list-style: none;
   padding: 0.4rem 0;
   display: flex;
