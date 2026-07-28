@@ -295,15 +295,6 @@ main > section.is-inview::before {
   z-index: -1;
 }
 
-.hero-chess-float {
-  animation: hero-chess-float 6s ease-in-out infinite;
-}
-
-@keyframes hero-chess-float {
-  0%, 100% { transform: translateY(-10px); }
-  50% { transform: translateY(10px); }
-}
-
 .hero-chess-tilt {
   position: relative;
   display: inline-block;
@@ -313,7 +304,7 @@ main > section.is-inview::before {
 
 .hero-chess-piece {
   display: block;
-  height: min(260px, 24vw);
+  height: min(380px, 32vw);
   width: auto;
   pointer-events: none;
 }
@@ -365,7 +356,6 @@ main > section.is-inview::before {
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .hero-chess-float,
   .hero-chess-shine::before {
     animation: none;
   }
