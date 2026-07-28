@@ -26,7 +26,7 @@ if (navigator.hardwareConcurrency && navigator.hardwareConcurrency < 4) {
   });
 })();
 
-// ---------- Peça de xadrez: inclina levemente a seguir o cursor (só desktop) ----------
+// ---------- Peça de xadrez: inclina a seguir o cursor, com inércia suave (só desktop) ----------
 (function heroChessTilt() {
   const tilt = $("#hero-chess-tilt");
   if (!tilt) return;
@@ -34,24 +34,30 @@ if (navigator.hardwareConcurrency && navigator.hardwareConcurrency < 4) {
   if (!window.matchMedia("(pointer: fine)").matches) return;
 
   const MAX_DEG = 4;
+  const SMOOTHING = 0.09; // mais baixo = mais "atraso"/inércia, mais alto = mais direto
+  let targetRx = 0;
+  let targetRy = 0;
   let rx = 0;
   let ry = 0;
-  let ticking = false;
+  let raf = null;
 
-  function apply() {
-    tilt.style.transform = `perspective(800px) rotateX(${rx}deg) rotateY(${ry}deg)`;
-    ticking = false;
+  function loop() {
+    rx += (targetRx - rx) * SMOOTHING;
+    ry += (targetRy - ry) * SMOOTHING;
+    tilt.style.transform = `perspective(800px) rotateX(${rx.toFixed(2)}deg) rotateY(${ry.toFixed(2)}deg)`;
+    if (Math.abs(targetRx - rx) > 0.01 || Math.abs(targetRy - ry) > 0.01) {
+      raf = requestAnimationFrame(loop);
+    } else {
+      raf = null;
+    }
   }
 
   window.addEventListener("pointermove", (e) => {
     const nx = e.clientX / window.innerWidth - 0.5;
     const ny = e.clientY / window.innerHeight - 0.5;
-    ry = nx * MAX_DEG * 2;
-    rx = -ny * MAX_DEG * 2;
-    if (!ticking) {
-      requestAnimationFrame(apply);
-      ticking = true;
-    }
+    targetRy = nx * MAX_DEG * 2;
+    targetRx = -ny * MAX_DEG * 2;
+    if (!raf) raf = requestAnimationFrame(loop);
   });
 })();
 

@@ -308,7 +308,7 @@ main > section.is-inview::before {
   position: relative;
   display: inline-block;
   transform: none;
-  transition: transform 400ms var(--ease);
+  will-change: transform;
 }
 
 .hero-chess-piece {
