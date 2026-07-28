@@ -295,6 +295,16 @@ main > section.is-inview::before {
   z-index: -1;
 }
 
+/* Balanço lento e contínuo, para dar vida sem parecer a flutuar no ar */
+.hero-chess-float {
+  animation: hero-chess-sway 10s ease-in-out infinite;
+}
+
+@keyframes hero-chess-sway {
+  0%, 100% { transform: rotateY(-6deg); }
+  50% { transform: rotateY(6deg); }
+}
+
 .hero-chess-tilt {
   position: relative;
   display: inline-block;
@@ -356,6 +366,7 @@ main > section.is-inview::before {
 }
 
 @media (prefers-reduced-motion: reduce) {
+  .hero-chess-float,
   .hero-chess-shine::before {
     animation: none;
   }
