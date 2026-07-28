@@ -26,6 +26,35 @@ if (navigator.hardwareConcurrency && navigator.hardwareConcurrency < 4) {
   });
 })();
 
+// ---------- Peça de xadrez: inclina levemente a seguir o cursor (só desktop) ----------
+(function heroChessTilt() {
+  const tilt = $("#hero-chess-tilt");
+  if (!tilt) return;
+  if (prefersReducedMotion) return;
+  if (!window.matchMedia("(pointer: fine)").matches) return;
+
+  const MAX_DEG = 4;
+  let rx = 0;
+  let ry = 0;
+  let ticking = false;
+
+  function apply() {
+    tilt.style.transform = `perspective(800px) rotateX(${rx}deg) rotateY(${ry}deg)`;
+    ticking = false;
+  }
+
+  window.addEventListener("pointermove", (e) => {
+    const nx = e.clientX / window.innerWidth - 0.5;
+    const ny = e.clientY / window.innerHeight - 0.5;
+    ry = nx * MAX_DEG * 2;
+    rx = -ny * MAX_DEG * 2;
+    if (!ticking) {
+      requestAnimationFrame(apply);
+      ticking = true;
+    }
+  });
+})();
+
 // ---------- Hover cinético no nome (mudança de cor única, contida) ----------
 (function heroNameHover() {
   const heroName = $("#hero-name");

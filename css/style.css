@@ -271,6 +271,106 @@ main > section.is-inview::before {
   overflow: hidden;
 }
 
+/* ---------- Peça de xadrez (hero da homepage) ---------- */
+.hero-chess {
+  position: absolute;
+  top: 50%;
+  right: clamp(1.5rem, 6vw, 6rem);
+  transform: translateY(-50%);
+  z-index: 1;
+  pointer-events: none;
+  perspective: 800px;
+}
+
+.hero-chess-glow {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 380px;
+  height: 380px;
+  transform: translate(-50%, -50%);
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(255, 255, 255, 0.06), transparent 70%);
+  filter: blur(30px);
+  z-index: -1;
+}
+
+.hero-chess-float {
+  animation: hero-chess-float 6s ease-in-out infinite;
+}
+
+@keyframes hero-chess-float {
+  0%, 100% { transform: translateY(-10px); }
+  50% { transform: translateY(10px); }
+}
+
+.hero-chess-tilt {
+  position: relative;
+  display: inline-block;
+  transform: none;
+  transition: transform 400ms var(--ease);
+}
+
+.hero-chess-piece {
+  display: block;
+  height: min(260px, 24vw);
+  width: auto;
+  pointer-events: none;
+}
+
+/* Brilho: a máscara (silhueta) fica sempre fixa, só o gradiente lá dentro desliza */
+.hero-chess-shine {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  pointer-events: none;
+  -webkit-mask-image: url("../assets/chess-piece.png");
+  mask-image: url("../assets/chess-piece.png");
+  -webkit-mask-size: contain;
+  mask-size: contain;
+  -webkit-mask-repeat: no-repeat;
+  mask-repeat: no-repeat;
+  -webkit-mask-position: center;
+  mask-position: center;
+}
+
+.hero-chess-shine::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(160deg, transparent 0%, transparent 37.5%, rgba(255, 255, 255, 0.22) 50%, transparent 62.5%, transparent 100%);
+  transform: translateY(-120%);
+  animation: hero-chess-shine 8s ease-in-out infinite;
+}
+
+@keyframes hero-chess-shine {
+  0% { transform: translateY(-120%); }
+  20% { transform: translateY(120%); }
+  100% { transform: translateY(120%); }
+}
+
+/* Abaixo de 900px: sai de cima do texto, fica atrás, centrada e muito discreta */
+@media (max-width: 899px) {
+  .hero-chess {
+    right: 50%;
+    transform: translate(50%, -50%);
+    opacity: 0.12;
+    z-index: -1;
+  }
+}
+
+/* Abaixo de 600px: esconde por completo */
+@media (max-width: 599px) {
+  .hero-chess { display: none; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .hero-chess-float,
+  .hero-chess-shine::before {
+    animation: none;
+  }
+}
+
 .hero-kicker {
   position: absolute;
   left: clamp(0.5rem, 2vw, 1.5rem);
