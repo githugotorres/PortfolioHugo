@@ -304,6 +304,11 @@ main { padding-top: 3.5rem; }
   display: block;
 }
 
+/* Slides retrato (imagens mais altas do que largas, ex: carrossel da renda) */
+.ig-carousel-block--portrait .ig-slide {
+  aspect-ratio: 1000 / 1241;
+}
+
 .ig-nav {
   position: absolute;
   top: 50%;
