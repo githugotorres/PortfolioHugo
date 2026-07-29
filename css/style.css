@@ -1032,6 +1032,14 @@ h1.section-title {
   border-top: 1px solid rgba(255, 255, 255, 0.14);
 }
 
+.project-metric {
+  font-family: var(--mono);
+  font-size: 0.72rem;
+  letter-spacing: 0.05em;
+  color: var(--active-accent, var(--accent-3));
+  margin: 0.75rem 0 0;
+}
+
 .project-arrow {
   align-self: flex-end;
   margin-top: auto;
