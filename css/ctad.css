@@ -443,6 +443,7 @@ main { padding-top: 3.5rem; }
 /* ---------- Resultado: fecho ---------- */
 .ctad-repeat { text-align: center; }
 .ctad-repeat .section-title { margin-left: auto; margin-right: auto; }
+.ctad-repeat .section-text { margin-left: auto; margin-right: auto; }
 
 .result-stats {
   display: flex;
