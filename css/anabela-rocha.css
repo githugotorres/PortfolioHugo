@@ -309,6 +309,11 @@ main { padding-top: 3.5rem; }
   aspect-ratio: 1000 / 1241;
 }
 
+/* Slides retrato do carrossel do contrato-promessa (proporção própria, ligeiramente mais alta) */
+.ig-carousel-block--promessa .ig-slide {
+  aspect-ratio: 1000 / 1333;
+}
+
 .ig-nav {
   position: absolute;
   top: 50%;
