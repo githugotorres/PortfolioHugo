@@ -445,6 +445,12 @@ main { padding-top: 3.5rem; }
   color: var(--on-dark-dim);
 }
 
+.ar-privacy-link {
+  color: inherit;
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}
+
 /* ---------- Responsive ---------- */
 @media (max-width: 860px) {
   .ar-hero { grid-template-columns: 1fr; text-align: left; padding-top: 6.5rem; }

@@ -505,6 +505,12 @@ main { padding-top: 3.5rem; }
   color: var(--ink-dim);
 }
 
+.ctad-privacy-link {
+  color: inherit;
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}
+
 /* ---------- Responsive ---------- */
 @media (max-width: 720px) {
   .hud-bar { padding: 0.75rem 1rem; font-size: 0.65rem; }

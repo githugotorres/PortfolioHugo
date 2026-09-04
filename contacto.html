@@ -140,6 +140,13 @@
           <textarea id="cf-mensagem" name="mensagem" rows="5" required></textarea>
         </div>
 
+        <div class="form-row">
+          <label class="form-consent-label" for="cf-consentimento">
+            <input type="checkbox" id="cf-consentimento" name="consentimento" value="Sim" required>
+            <span>Li e aceito a <a href="privacidade.html" target="_blank" rel="noopener">Política de Privacidade</a>.</span>
+          </label>
+        </div>
+
         <button type="submit" class="btn btn-primary form-submit" id="contact-form-submit">Enviar</button>
 
         <p class="form-status" id="contact-form-status" role="status" aria-live="polite" hidden></p>
@@ -165,6 +172,7 @@
   <footer class="footer">
     <div class="footer-row">
       <p class="footer-copy">&copy; <span id="year"></span> design e desenvolvimento feito por Hugo Torres.</p>
+      <a href="privacidade.html" class="footer-top">Política de Privacidade</a>
       <a href="index.html#home" class="footer-top">Voltar ao início ↑</a>
     </div>
   </footer>

@@ -410,6 +410,12 @@ main { padding-top: 4rem; }
   font-size: 0.9rem;
 }
 
+.vg-privacy-link {
+  color: inherit;
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}
+
 .vg-cta {
   display: inline-flex;
   align-items: center;

@@ -792,6 +792,24 @@ h1.section-title {
   max-width: 65ch;
 }
 
+/* Links dentro de texto corrido (política de privacidade, FAQ, etc.) */
+.about-text a,
+.section-note a,
+.faq-answer a {
+  color: var(--ink);
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}
+
+.about-text a:hover,
+.section-note a:hover,
+.faq-answer a:hover,
+.about-text a:focus-visible,
+.section-note a:focus-visible,
+.faq-answer a:focus-visible {
+  color: var(--active-accent, var(--accent-3));
+}
+
 .about-grid {
   display: grid;
   grid-template-columns: 1fr;
@@ -1405,6 +1423,34 @@ h1.section-title {
   overflow: hidden;
   opacity: 0;
   pointer-events: none;
+}
+
+.form-row label.form-consent-label {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.65rem;
+  font-family: var(--font-body);
+  font-size: 0.85rem;
+  letter-spacing: normal;
+  text-transform: none;
+  line-height: 1.5;
+  color: var(--ink-dim);
+  cursor: pointer;
+}
+
+.form-consent-label input[type="checkbox"] {
+  flex-shrink: 0;
+  width: 17px;
+  height: 17px;
+  margin: 0.1rem 0 0;
+  accent-color: var(--active-accent, var(--accent-3));
+  cursor: pointer;
+}
+
+.form-consent-label a {
+  color: var(--ink);
+  text-decoration: underline;
+  text-underline-offset: 2px;
 }
 
 .form-submit { align-self: flex-start; }
