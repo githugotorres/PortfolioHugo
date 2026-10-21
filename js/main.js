@@ -342,10 +342,13 @@ if (navigator.hardwareConcurrency && navigator.hardwareConcurrency < 4) {
   form.addEventListener("submit", async (e) => {
     e.preventDefault();
 
-    if (!form.reportValidity()) return;
+    if (!form.reportValidity()) {
+      showStatus("Falta preencher um campo obrigatório (ou o email não é válido).", true);
+      return;
+    }
 
-    // Honeypot: se o campo escondido vier preenchido, é um bot — não envia.
-    if (form.elements["_gotcha"] && form.elements["_gotcha"].value) return;
+    // O honeypot (_gotcha) é verificado pelo Formspree no servidor. Não bloquear aqui:
+    // o autofill do browser pode preenchê-lo e o botão deixava de fazer o que quer que fosse.
 
     statusEl.hidden = true;
     submitBtn.disabled = true;

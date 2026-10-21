@@ -1416,14 +1416,8 @@ h1.section-title {
   border-color: rgba(255, 95, 109, 0.6);
 }
 
-.form-honeypot {
-  position: absolute;
-  width: 1px;
-  height: 1px;
-  overflow: hidden;
-  opacity: 0;
-  pointer-events: none;
-}
+/* display: none impede o autofill do browser de preencher o honeypot */
+.form-honeypot { display: none; }
 
 .form-row label.form-consent-label {
   display: flex;
